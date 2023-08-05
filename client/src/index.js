@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Login from './pages/login';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+// handling the admin authentication here
+// function would be used to determine admin authentication if true or false
+const isAuthenticated = false;
+
 root.render(
   <React.StrictMode>
-    <App />
+    {isAuthenticated ? <App /> : <Login />}
   </React.StrictMode>
 );
 

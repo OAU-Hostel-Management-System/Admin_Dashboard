@@ -1,12 +1,16 @@
 
 import './App.css';
+import Navbar from './components/navbar';
 
 function App() {
   return (
     <div className="App">
-    <h1 className="text-3xl underline text-blue-700">
-      Hello world!
-    </h1>
+   <Navbar />
+
+   {/* brower router would be used so the Navbar won't be re-rendered when a page is selected */}
+   <div>
+      Upcoming...
+   </div>
     </div>
   );
 }
