@@ -9,11 +9,12 @@ import Students from './pages/admin/students'
 
 function App() {
   return (
-    <div className="App w-screen flex ">
+    <div className="w-full flex overflow-hidden ">
    <Navbar />
 
    {/* brower router would be used so the Navbar won't be re-rendered when a page is selected */}
-   <Routes>
+   <div className='w-3/4 overflow-hidden bg-[#EBEBEB]'>
+    <Routes>
     <Route path='/' element={<Dashboard />}> </Route>
     <Route path='/hostel_records' element={<Hostel />}> </Route>
     <Route path='/custom' element={<Allocation />}> </Route>
@@ -21,6 +22,7 @@ function App() {
     <Route path='/list' element={<Dashboard />}>
     </Route>
    </Routes>
+   </div>
     </div>
   );
 }

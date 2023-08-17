@@ -1,5 +1,5 @@
 import React from 'react'
-import logosvg from './logosvg.svg'
+import Logosvg from './logosvg.svg'
 
 
 const Login = () => {
@@ -11,7 +11,7 @@ const Login = () => {
    
     <div className = 'flex'>
       <div className = 'bg-[#113885] border-black rounded-r-[5rem] w-1/2 h-screen flex flex-col justify-center items-center'>
-         <img src={logosvg}  alt="" className='w-80  p-8' />
+         <img src={Logosvg}  alt="" className='w-80  p-8' />
          <p className = 'text-3xl text-white pb-6 font-bold'>Obafemi Awolowo University</p>
          <p className = 'text-2xl text-white font-bold'>Hostel Management Portal</p>
       </div>
