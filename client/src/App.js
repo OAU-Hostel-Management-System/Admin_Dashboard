@@ -13,7 +13,7 @@ function App() {
    <Navbar />
 
    {/* brower router would be used so the Navbar won't be re-rendered when a page is selected */}
-   <div className='w-3/4 overflow-hidden bg-[#EBEBEB]'>
+   <div className='w-3/4 ml-auto overflow-hidden bg-[#EBEBEB]'>
     <Routes>
     <Route path='/' element={<Dashboard />}> </Route>
     <Route path='/hostel_records' element={<Hostel />}> </Route>

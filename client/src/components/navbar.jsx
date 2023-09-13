@@ -2,7 +2,7 @@ import React from 'react'
 
 function Navbar() {
   return (
-    <div className='border-r h-screen w-1/4  pt-5'>
+    <div className='border-r h-screen w-1/4 fixed  pt-5'>
       <div className='mb-5 text-center'>
         <img src='./oau.svg' className='mx-auto h-36' alt='oau logo' />
         <span className='text-center'>Obefemi Awolowo University</span> <br />
