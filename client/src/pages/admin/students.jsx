@@ -1,67 +1,171 @@
-import React from 'react'
+import React, {useEffect, useState,useRef} from 'react'
 
-const rawJson = [{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-}]
+let rawJson = [
+  {
+    "id": 1,
+    "matric": "A12345",
+    "full_name": "John Doe",
+    "bedspace": "Room 101",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 2,
+    "matric": "B67890",
+    "full_name": "Alice Smith",
+    "bedspace": "Room 102",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 3,
+    "matric": "C54321",
+    "full_name": "Bob Johnson",
+    "bedspace": "Room 103",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 4,
+    "matric": "D98765",
+    "full_name": "Eva Brown",
+    "bedspace": "Room 104",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 5,
+    "matric": "E56789",
+    "full_name": "Frank Davis",
+    "bedspace": "Room 105",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 6,
+    "matric": "F23456",
+    "full_name": "Grace Wilson",
+    "bedspace": "Room 106",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 7,
+    "matric": "G87654",
+    "full_name": "Helen Garcia",
+    "bedspace": "Room 107",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 8,
+    "matric": "H34567",
+    "full_name": "Ian Martinez",
+    "bedspace": "Room 108",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 9,
+    "matric": "I12345",
+    "full_name": "Jackie Lee",
+    "bedspace": "Room 109",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 10,
+    "matric": "J56789",
+    "full_name": "Katie Robinson",
+    "bedspace": "Room 110",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 11,
+    "matric": "K98765",
+    "full_name": "Liam Wright",
+    "bedspace": "Room 111",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 12,
+    "matric": "L23456",
+    "full_name": "Mia Hall",
+    "bedspace": "Room 112",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 13,
+    "matric": "M87654",
+    "full_name": "Nathan Lopez",
+    "bedspace": "Room 113",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 14,
+    "matric": "N34567",
+    "full_name": "Olivia Adams",
+    "bedspace": "Room 114",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 15,
+    "matric": "O12345",
+    "full_name": "Peter Turner",
+    "bedspace": "Room 115",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 16,
+    "matric": "P56789",
+    "full_name": "Quincy White",
+    "bedspace": "Room 116",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 17,
+    "matric": "Q98765",
+    "full_name": "Rachel Stewart",
+    "bedspace": "Room 117",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 18,
+    "matric": "R23456",
+    "full_name": "Samuel Clark",
+    "bedspace": "Room 118",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 19,
+    "matric": "S87654",
+    "full_name": "Tina Baker",
+    "bedspace": "Room 119",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 20,
+    "matric": "T34567",
+    "full_name": "Ulysses Lewis",
+    "bedspace": "Room 120",
+    "payment_status": "Paid"
+  },
+  {
+    "id": 21,
+    "matric": "U12345",
+    "full_name": "Vera Green",
+    "bedspace": "Room 121",
+    "payment_status": "Not Paid"
+  },
+  {
+    "id": 22,
+    "matric": "V56789",
+    "full_name": "Walter Harris",
+    "bedspace": "Room 122",
+    "payment_status": "Paid"
+  }
+]
+
 function Students() {
+   const [studentList, setList] = useState(rawJson)
+  //  const  inputRef = useRef('John')
+  //   const changeContent = ()=>{
+  //     const updatedList = studentList.filter((list)=> list.full_name.includes(inputRef.current.value))
+  //     setList(updatedList)
+  //   }
+
+
   const popDetails = (name, matric)=>{
     console.log(name, matric)
   }
@@ -79,12 +183,29 @@ function Students() {
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
         </div>
-        <input type="search" id="default-search" 
+        <input 
+        // onChange={changeContent()}0
+        onChange={(evt) => { 
+          setList(rawJson)
+         if(evt.target.value == ''){
+          setList(rawJson)
+         }else{
+          const updatedList = studentList.filter((list)=> 
+          list.full_name.includes(evt.target.value) || list.matric.includes(evt.target.value))
+          setList(updatedList)
+         }
+         }}
+        type="search" 
+        id="search"
+        name='search'
         className="block w-full p-4 pl-10 text-sm text-gray-900 border
          border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500
           focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600
            dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
-            dark:focus:border-blue-500" placeholder="Search students by matric..."
+            dark:focus:border-blue-500"
+            //  ref={inputRef}
+
+            placeholder="Search students by matric..."
          required /></div>
 </form>
        <div className='flex gap-3  -mt-1 mr-10'>
@@ -147,20 +268,22 @@ function Students() {
       </div>
       <table className='h-10/12 mt-10 w-full' >
         <thead className='text-center text-white bg-blue-900'>
-          <th className='px-10 py-4 border-b'>Blocks</th>
-          <th className='px-10 py-3 border-b'>Rooms</th>
-          <th className='px-10 py-3 border-b'>Bedpsace</th>
-          <th className='px-10 py-3 border-b'>Allocated</th>
-          <th className='px-10 py-3 border-b'>Unallocated</th>
+          <tr>
+          <th className='px-10 py-4 border-b'>Matric</th>
+          <th className='px-10 py-3 border-b'>Full name</th>
+          <th className='px-10 py-3 border-b'>Bedspace</th>
+          <th className='px-10 py-3 border-b'>Payment status</th>
+          </tr>
         </thead>
         <tbody>
-          {rawJson.map((data) => <tr onClick={popDetails(data.Allocation, data.Room)} 
+          {studentList.map((data) => <tr onClick={popDetails(data.Allocation, data.Room)} 
           className='text-center border-b py-5 cursor-pointer hover:bg-gray-300'>
-              <td className=' py-3 '>{data.Blocks}</td>
-              <td className=' py-3 '>{data.Room}</td>
-              <td className=' py-3 '>{data.Bedspace}</td>
-              <td className=' py-3 '>{data.Allocation}</td>
-              <td className=' py-3 '>{data.Unallocated}</td>
+              <td className=' py-3 '>{data.matric}</td>
+              <td className=' py-3 '>{data.full_name}</td>
+              <td className=' py-3 '>{data.bedspace}</td>
+              {data.payment_status == 'Paid'? 
+              <td className=' py-3 text-green-600'>{data.payment_status}</td> : 
+              <td className=' py-3 text-red-600'>{data.payment_status}</td>}
           </tr>)}
         </tbody>
       </table>
