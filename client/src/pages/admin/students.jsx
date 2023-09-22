@@ -1,4 +1,5 @@
 import React, {useEffect, useState,useRef} from 'react'
+import Idcard  from '../../components/idCard'
 
 let rawJson = [
   {
@@ -6,169 +7,214 @@ let rawJson = [
     "matric": "A12345",
     "full_name": "John Doe",
     "bedspace": "Room 101",
-    "payment_status": "Paid"
+    "payment_status": "Paid",
+    "gender": "Male",
+    "session": "2023-2024",
+    "department": "Engineering"
   },
   {
     "id": 2,
     "matric": "B67890",
-    "full_name": "Alice Smith",
+    "full_name": "Jane Smith",
     "bedspace": "Room 102",
-    "payment_status": "Not Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2022-2023",
+    "department": "Computer Science"
   },
   {
     "id": 3,
     "matric": "C54321",
-    "full_name": "Bob Johnson",
+    "full_name": "Alice Johnson",
     "bedspace": "Room 103",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Biology"
   },
   {
     "id": 4,
     "matric": "D98765",
-    "full_name": "Eva Brown",
+    "full_name": "Michael Brown",
     "bedspace": "Room 104",
-    "payment_status": "Not Paid"
+    "payment_status": "Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Mathematics"
   },
   {
     "id": 5,
-    "matric": "E56789",
-    "full_name": "Frank Davis",
+    "matric": "E23456",
+    "full_name": "Emily Wilson",
     "bedspace": "Room 105",
-    "payment_status": "Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Physics"
   },
   {
     "id": 6,
-    "matric": "F23456",
-    "full_name": "Grace Wilson",
+    "matric": "F76543",
+    "full_name": "David Lee",
     "bedspace": "Room 106",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Chemistry"
   },
   {
     "id": 7,
     "matric": "G87654",
-    "full_name": "Helen Garcia",
+    "full_name": "Sophia Clark",
     "bedspace": "Room 107",
-    "payment_status": "Not Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "History"
   },
   {
     "id": 8,
     "matric": "H34567",
-    "full_name": "Ian Martinez",
+    "full_name": "William Turner",
     "bedspace": "Room 108",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "English"
   },
   {
     "id": 9,
-    "matric": "I12345",
-    "full_name": "Jackie Lee",
+    "matric": "I45678",
+    "full_name": "Olivia Davis",
     "bedspace": "Room 109",
-    "payment_status": "Not Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Economics"
   },
   {
     "id": 10,
     "matric": "J56789",
-    "full_name": "Katie Robinson",
+    "full_name": "Daniel Martinez",
     "bedspace": "Room 110",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Psychology"
   },
   {
     "id": 11,
-    "matric": "K98765",
-    "full_name": "Liam Wright",
+    "matric": "K67890",
+    "full_name": "Sophie Anderson",
     "bedspace": "Room 111",
-    "payment_status": "Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Sociology"
   },
   {
     "id": 12,
-    "matric": "L23456",
-    "full_name": "Mia Hall",
+    "matric": "L78901",
+    "full_name": "James White",
     "bedspace": "Room 112",
-    "payment_status": "Not Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Political Science"
   },
   {
     "id": 13,
-    "matric": "M87654",
-    "full_name": "Nathan Lopez",
+    "matric": "M89012",
+    "full_name": "Emma Harris",
     "bedspace": "Room 113",
-    "payment_status": "Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Geology"
   },
   {
     "id": 14,
-    "matric": "N34567",
-    "full_name": "Olivia Adams",
+    "matric": "N90123",
+    "full_name": "Alexander Taylor",
     "bedspace": "Room 114",
-    "payment_status": "Not Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Philosophy"
   },
   {
     "id": 15,
-    "matric": "O12345",
-    "full_name": "Peter Turner",
+    "matric": "O01234",
+    "full_name": "Chloe Wilson",
     "bedspace": "Room 115",
-    "payment_status": "Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Art History"
   },
   {
     "id": 16,
-    "matric": "P56789",
-    "full_name": "Quincy White",
+    "matric": "P12345",
+    "full_name": "Benjamin Clark",
     "bedspace": "Room 116",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Music"
   },
   {
     "id": 17,
-    "matric": "Q98765",
-    "full_name": "Rachel Stewart",
+    "matric": "Q23456",
+    "full_name": "Ava Adams",
     "bedspace": "Room 117",
-    "payment_status": "Not Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Drama"
   },
   {
     "id": 18,
-    "matric": "R23456",
-    "full_name": "Samuel Clark",
+    "matric": "R34567",
+    "full_name": "Christopher Turner",
     "bedspace": "Room 118",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Architecture"
   },
   {
     "id": 19,
-    "matric": "S87654",
-    "full_name": "Tina Baker",
+    "matric": "S45678",
+    "full_name": "Mia Davis",
     "bedspace": "Room 119",
-    "payment_status": "Not Paid"
+    "payment_status": "Paid",
+    "gender": "Female",
+    "session": "2023-2024",
+    "department": "Environmental Science"
   },
   {
     "id": 20,
-    "matric": "T34567",
-    "full_name": "Ulysses Lewis",
+    "matric": "T56789",
+    "full_name": "William Johnson",
     "bedspace": "Room 120",
-    "payment_status": "Paid"
-  },
-  {
-    "id": 21,
-    "matric": "U12345",
-    "full_name": "Vera Green",
-    "bedspace": "Room 121",
-    "payment_status": "Not Paid"
-  },
-  {
-    "id": 22,
-    "matric": "V56789",
-    "full_name": "Walter Harris",
-    "bedspace": "Room 122",
-    "payment_status": "Paid"
+    "payment_status": "Not Paid",
+    "gender": "Male",
+    "session": "2022-2023",
+    "department": "Chemical Engineering"
   }
 ]
 
+
 function Students() {
    const [studentList, setList] = useState(rawJson)
-  //  const  inputRef = useRef('John')
-  //   const changeContent = ()=>{
-  //     const updatedList = studentList.filter((list)=> list.full_name.includes(inputRef.current.value))
-  //     setList(updatedList)
-  //   }
+   const [idDetails, setIdDetaials ] =  useState({
+    name : '', matric : '', gender : '', department : "", session : ""})
+   const [visibility, setVisibility ]= useState(false)
 
 
-  const popDetails = (name, matric)=>{
-    console.log(name, matric)
-  }
+
+
+ 
   return (
     <div className='m-2'>
     <div className=' flex justify-between  bg-white m-2 py-5  px-4'>
@@ -184,7 +230,6 @@ function Students() {
             </svg>
         </div>
         <input 
-        // onChange={changeContent()}0
         onChange={(evt) => { 
           setList(rawJson)
          if(evt.target.value == ''){
@@ -192,6 +237,7 @@ function Students() {
          }else{
           const updatedList = studentList.filter((list)=> 
           list.full_name.includes(evt.target.value) || list.matric.includes(evt.target.value))
+         
           setList(updatedList)
          }
          }}
@@ -219,6 +265,13 @@ function Students() {
     </div>
 
     <section className='bg-white ml-2 pt-4 mr-2 rounded-lg '>
+      {visibility ?    <svg onClick={()=>setVisibility(false)} xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="#fff" 
+         className="bi bi-x-circle top-44 fixed 
+         right-[17rem] z-30 bg-black rounded-full cursor-pointer" viewBox="0 0 16 16">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg> : <></>}
+     { visibility ? <Idcard info={idDetails} /> : <></>}
       <div className='mx-auto  w-5/6'>
        <h5>Sort By :</h5>
        <div className='mt-3 flex gap-4'>
@@ -276,7 +329,19 @@ function Students() {
           </tr>
         </thead>
         <tbody>
-          {studentList.map((data) => <tr onClick={popDetails(data.Allocation, data.Room)} 
+          {studentList.map((data) => <tr 
+          onClick={ ()=>{
+            setIdDetaials({ 
+              name : data.full_name,
+               matric : data.matric,
+              bedspace : data.bedspace,
+              department : data.department,
+              session : data.session,
+              gender : data.gender,
+            payment_status : data.payment_status})
+            setVisibility(true)
+          }
+          } 
           className='text-center border-b py-5 cursor-pointer hover:bg-gray-300'>
               <td className=' py-3 '>{data.matric}</td>
               <td className=' py-3 '>{data.full_name}</td>

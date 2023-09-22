@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const rawJson = [{
   Blocks : 1,
@@ -61,16 +61,27 @@ const rawJson = [{
   Allocation : 245,
   Unallocated : 30
 }]
+
 function Hostels() {
-  const popDetails = (name, matric)=>{
-    console.log(name, matric)
+  const [checkbox, setCheckBox ] = useState(false)
+  const [changeList, setChangeList ] = useState([]);
+
+  const handleCheck = (e)=>{
+      let checkedValue = e.target.checked
+      if(checkedValue){
+        setChangeList([...changeList, e.target.value]);
+        console.log('the list', changeList)
+      } 
   }
+  
+  
   return (
     <div className='m-2'>
     <div className=' flex justify-between  bg-white m-2 py-5  px-4'>
     <span className=' text-blue-800 text-xl '>Hostels Record</span>
        <div className='flex gap-3  -mt-1 mr-10'>
-            <span className='my-auto'><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+            <span className='my-auto'>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
 </svg></span>
            <img className='h-8 w-8 rounded-full mt-2'
@@ -80,14 +91,21 @@ function Hostels() {
     </div>
 
     <section className='bg-white ml-2 pt-4 mr-2 rounded-lg '>
-      <span className='ml-auto bg-red-400'>
+   { checkbox ? <></> :    <span className='ml-auto bg-red-400'  onClick={()=>{setCheckBox(true)}}>
       <svg xmlns="http://www.w3.org/2000/svg" width="22"
        height="22" fill="currentColor"
         className="bi bi-pencil-square ml-auto mr-10 cursor-pointer" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg>
-      </span>
+      </span> }
+      { checkbox ?  <span className='ml-auto bg-red-400' onClick={()=>{setCheckBox(false)}}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+         class="bi bi-x ml-auto mr-10 cursor-pointer" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+</svg> 
+</span>: <></> }
+      
       <div className='mx-auto  w-5/6'>
        <h5>Sort By :</h5>
        <div className='mt-3 flex gap-4'>
@@ -137,6 +155,7 @@ function Hostels() {
       </div>
       <table className='h-10/12 mt-10 w-full' >
         <thead className='text-center text-white bg-blue-900'>
+          { checkbox ? <th className='px-10 py-4 border-b'>Select List</th> : <></>}
           <th className='px-10 py-4 border-b'>Blocks</th>
           <th className='px-10 py-3 border-b'>Rooms</th>
           <th className='px-10 py-3 border-b'>Bedpsace</th>
@@ -144,8 +163,10 @@ function Hostels() {
           <th className='px-10 py-3 border-b'>Unallocated</th>
         </thead>
         <tbody>
-          {rawJson.map((data) => <tr onClick={popDetails(data.Allocation, data.Room)} 
+          {rawJson.map((data) => <tr 
           className='text-center border-b py-5 cursor-pointer hover:bg-gray-300'>
+            {checkbox ? <td><input type="checkbox" id="mycheckbox"
+             onChange={handleCheck} name={data.Room} value={data.Room} /></td> : <></>}
               <td className=' py-3 '>{data.Blocks}</td>
               <td className=' py-3 '>{data.Room}</td>
               <td className=' py-3 '>{data.Bedspace}</td>
