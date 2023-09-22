@@ -1,66 +1,112 @@
 import React, { useState } from 'react'
 
-const rawJson = [{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-}]
+const rawJson = [
+  {
+    "Blocks": 3,
+    "Room": 12,
+    "Bedspace": 250,
+    "Allocation": 180,
+    "Unallocated": 70
+  },
+  {
+    "Blocks": 2,
+    "Room": 7,
+    "Bedspace": 150,
+    "Allocation": 120,
+    "Unallocated": 30
+  },
+  {
+    "Blocks": 4,
+    "Room": 19,
+    "Bedspace": 400,
+    "Allocation": 320,
+    "Unallocated": 80
+  },
+  {
+    "Blocks": 1,
+    "Room": 4,
+    "Bedspace": 100,
+    "Allocation": 90,
+    "Unallocated": 10
+  },
+  {
+    "Blocks": 5,
+    "Room": 15,
+    "Bedspace": 350,
+    "Allocation": 290,
+    "Unallocated": 60
+  },
+  {
+    "Blocks": 2,
+    "Room": 8,
+    "Bedspace": 180,
+    "Allocation": 150,
+    "Unallocated": 30
+  },
+  {
+    "Blocks": 3,
+    "Room": 11,
+    "Bedspace": 220,
+    "Allocation": 170,
+    "Unallocated": 50
+  },
+  {
+    "Blocks": 4,
+    "Room": 14,
+    "Bedspace": 300,
+    "Allocation": 240,
+    "Unallocated": 60
+  },
+  {
+    "Blocks": 1,
+    "Room": 5,
+    "Bedspace": 120,
+    "Allocation": 100,
+    "Unallocated": 20
+  },
+  {
+    "Blocks": 5,
+    "Room": 17,
+    "Bedspace": 380,
+    "Allocation": 310,
+    "Unallocated": 70
+  },
+  {
+    "Blocks": 2,
+    "Room": 9,
+    "Bedspace": 200,
+    "Allocation": 160,
+    "Unallocated": 40
+  },
+  {
+    "Blocks": 3,
+    "Room": 10,
+    "Bedspace": 230,
+    "Allocation": 180,
+    "Unallocated": 50
+  },
+  {
+    "Blocks": 4,
+    "Room": 13,
+    "Bedspace": 280,
+    "Allocation": 220,
+    "Unallocated": 60
+  },
+  {
+    "Blocks": 1,
+    "Room": 6,
+    "Bedspace": 140,
+    "Allocation": 110,
+    "Unallocated": 30
+  },
+  {
+    "Blocks": 5,
+    "Room": 18,
+    "Bedspace": 370,
+    "Allocation": 300,
+    "Unallocated": 70
+  }
+]
 
 function Hostels() {
   const [checkbox, setCheckBox ] = useState(false)

@@ -12,11 +12,16 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 // handling the admin authentication here
 // function would be used to determine admin authentication if true or false
 const isAuthenticated = true;
+const view =  window.innerWidth 
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    {isAuthenticated ? <App /> : <Login />}
+    { view  > 400 ? 
+    <>
+    {isAuthenticated ? <App /> : <Login />} </> : 
+    <div className='bg-black text-white text-center py-20'><h2 className='text-xl'>No dey whine me Boss!! <br/> change to desktop view</h2></div>
+    }
     </BrowserRouter>
   </React.StrictMode>
 );
