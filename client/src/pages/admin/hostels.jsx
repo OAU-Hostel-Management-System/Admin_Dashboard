@@ -64,12 +64,14 @@ const rawJson = [{
 
 function Hostels() {
   const [checkbox, setCheckBox ] = useState(false)
-  const [changeList, setChangeList ] = useState([]);
+  const [filter, setFilter ] = useState('')
+  const changeList = []
 
   const handleCheck = (e)=>{
+    console.log('the list1', changeList)
       let checkedValue = e.target.checked
       if(checkedValue){
-        setChangeList([...changeList, e.target.value]);
+        changeList.push(e.target.value);
         console.log('the list', changeList)
       } 
   }
@@ -99,7 +101,7 @@ function Hostels() {
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg>
       </span> }
-      { checkbox ?  <span className='ml-auto bg-red-400' onClick={()=>{setCheckBox(false)}}>
+      { checkbox ?  <span className='ml-auto bg-red-400' onClick={()=>{setCheckBox(false); setFilter('')}}>
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
          class="bi bi-x ml-auto mr-10 cursor-pointer" viewBox="0 0 16 16">
   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
@@ -148,9 +150,18 @@ function Hostels() {
           <i class="fas fa-chevron-down text-gray-400"></i>
         </div>
 </div>
-<button className='text-center bg-blue-900 text-white px-14 py-3 rounded-md'>
+<button  onClick={()=>{setFilter("length")}}
+className='text-center bg-blue-900 max-h-12 text-white px-14 py-3 rounded-md'>
   Filter
 </button>
+{filter.length > 0 ?
+ <div className=' rounded-md z-50 -mt-10 w-[200px] fixed right-28 bg-white
+  shadow-xl cursor-pointer text-center '>
+  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Available</div>
+  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Occupied</div>
+  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Reserved</div>
+  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Faulty</div>
+</div>  : <></>}
        </div>
       </div>
       <table className='h-10/12 mt-10 w-full' >
