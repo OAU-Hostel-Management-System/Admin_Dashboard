@@ -1,118 +1,53 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
+import Shimmer from '../../components/skeleton/shimer'
 
-const rawJson = [
-  {
-    "Blocks": 3,
-    "Room": 12,
-    "Bedspace": 250,
-    "Allocation": 180,
-    "Unallocated": 70
-  },
-  {
-    "Blocks": 2,
-    "Room": 7,
-    "Bedspace": 150,
-    "Allocation": 120,
-    "Unallocated": 30
-  },
-  {
-    "Blocks": 4,
-    "Room": 19,
-    "Bedspace": 400,
-    "Allocation": 320,
-    "Unallocated": 80
-  },
-  {
-    "Blocks": 1,
-    "Room": 4,
-    "Bedspace": 100,
-    "Allocation": 90,
-    "Unallocated": 10
-  },
-  {
-    "Blocks": 5,
-    "Room": 15,
-    "Bedspace": 350,
-    "Allocation": 290,
-    "Unallocated": 60
-  },
-  {
-    "Blocks": 2,
-    "Room": 8,
-    "Bedspace": 180,
-    "Allocation": 150,
-    "Unallocated": 30
-  },
-  {
-    "Blocks": 3,
-    "Room": 11,
-    "Bedspace": 220,
-    "Allocation": 170,
-    "Unallocated": 50
-  },
-  {
-    "Blocks": 4,
-    "Room": 14,
-    "Bedspace": 300,
-    "Allocation": 240,
-    "Unallocated": 60
-  },
-  {
-    "Blocks": 1,
-    "Room": 5,
-    "Bedspace": 120,
-    "Allocation": 100,
-    "Unallocated": 20
-  },
-  {
-    "Blocks": 5,
-    "Room": 17,
-    "Bedspace": 380,
-    "Allocation": 310,
-    "Unallocated": 70
-  },
-  {
-    "Blocks": 2,
-    "Room": 9,
-    "Bedspace": 200,
-    "Allocation": 160,
-    "Unallocated": 40
-  },
-  {
-    "Blocks": 3,
-    "Room": 10,
-    "Bedspace": 230,
-    "Allocation": 180,
-    "Unallocated": 50
-  },
-  {
-    "Blocks": 4,
-    "Room": 13,
-    "Bedspace": 280,
-    "Allocation": 220,
-    "Unallocated": 60
-  },
-  {
-    "Blocks": 1,
-    "Room": 6,
-    "Bedspace": 140,
-    "Allocation": 110,
-    "Unallocated": 30
-  },
-  {
-    "Blocks": 5,
-    "Room": 18,
-    "Bedspace": 370,
-    "Allocation": 300,
-    "Unallocated": 70
-  }
-]
+
+
 
 function Hostels() {
+
+ 
   const [checkbox, setCheckBox ] = useState(false)
-  const [filter, setFilter ] = useState('')
+  const [filter, setFilter ] = useState({ block : "", roomNo : "", hostel :"Awo" })
+  const [showlist, setShow ]=  useState(false)
+  const [hostelList, setHostel ] = useState([])
   const changeList = []
 
+  const filterList = (url, headers) =>{
+    axios.get(url, {headers})
+    .then( (res) => {
+      if(res.data.success){
+        const list = res.data.data;
+        setHostel(list)
+        console.log(list)
+        setShow(true) 
+      }})
+    .catch(err => console.log("the error ", url, err))
+  }
+  useEffect(()=>{
+    const url =filter.roomNo.length > 1 ? 
+     `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&block=${filter.block}&roomNo=${filter.roomNo}`
+      : 'https://hmsbackend-c36l.onrender.com/admin/getHostelRecord' 
+const token = sessionStorage.getItem("authToken")
+const headers = {
+  "Authorization" : `${token} `
+}
+ if(filter.roomNo.length > 1  && showlist){
+  filterList(url, headers)
+ }else{
+  axios.get(url,{headers})
+  .then( (res) => {
+    if(res.data.success ){
+      let list = res.data.data
+       setHostel(list)
+      setShow(true)
+    } 
+  
+    })
+  .catch(err => console.log("error ", err))
+ }
+  }, [showlist])
   const handleCheck = (e)=>{
     console.log('the list1', changeList)
       let checkedValue = e.target.checked
@@ -122,6 +57,7 @@ function Hostels() {
       } 
   }
   
+
   
   return (
     <div className='m-2'>
@@ -171,67 +107,72 @@ function Hostels() {
         </div>
 </div>
 <div class="relative w-1/6 border-none">
-        <select class=" 
+        <select  onChange={(evt) =>{setFilter({...filter, block : evt.target.value})}}
+         class=" 
          appearance-none border border-black bg-white inline-block py-3 pl-3 pr-8 
          rounded leading-tight w-full">
             <option class="pt-6">Blocks </option>
-            <option>Angola Hall of Residence</option>
-            <option>Awolowo Hall of Residence</option>
-            <option>Moremi Hall of Residence</option>
+            <option value="1">Block 1</option>
+            <option value="2">Block 2</option>
+            <option value="3">Block 3</option>
+            <option value="4">Block 4</option>
+            <option value="5">Block 5</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
           <i class="fas fa-chevron-down text-gray-400"></i>
         </div>
 </div>
 <div class="relative w-1/6 border-none">
-        <select class=" 
-         appearance-none border border-black bg-white inline-block py-3 pl-3 pr-8 
+        <select onChange={(evt) =>{setFilter({...filter, roomNo : evt.target.value})}}
+         class="appearance-none border border-black bg-white inline-block py-3 pl-3 pr-8 
          rounded leading-tight w-full">
             <option class="pt-6"> Rooms </option>
-            <option>Angola Hall of Residence</option>
-            <option>Awolowo Hall of Residence</option>
-            <option>Moremi Hall of Residence</option>
+            <option value="101" >Room 101</option>
+            <option value="102">Room 102</option>
+            <option value="103">Room 103</option>
         </select>
         <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
           <i class="fas fa-chevron-down text-gray-400"></i>
         </div>
 </div>
-<button  onClick={()=>{setFilter("length")}}
+<button  onClick={()=>{
+  setShow(false)
+}}
 className='text-center bg-blue-900 max-h-12 text-white px-14 py-3 rounded-md'>
   Filter
 </button>
-{filter.length > 0 ?
- <div className=' rounded-md z-50 -mt-10 w-[200px] fixed right-28 bg-white
-  shadow-xl cursor-pointer text-center '>
-  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Available</div>
-  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Occupied</div>
-  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Reserved</div>
-  <div className='py-3 hover:border-r-4 hover:border-r-blue-900 hover:bg-blue-200'>Faulty</div>
-</div>  : <></>}
+
        </div>
       </div>
-      <table className='h-10/12 mt-10 w-full' >
+    { showlist ? <table className='h-10/12 mt-10 w-full' >
         <thead className='text-center text-white bg-blue-900'>
           { checkbox ? <th className='px-10 py-4 border-b'>Select List</th> : <></>}
+          <th className='px-10 py-4 border-b'>Hostel</th> 
           <th className='px-10 py-4 border-b'>Blocks</th>
           <th className='px-10 py-3 border-b'>Rooms</th>
           <th className='px-10 py-3 border-b'>Bedpsace</th>
           <th className='px-10 py-3 border-b'>Allocated</th>
-          <th className='px-10 py-3 border-b'>Unallocated</th>
+          { checkbox ? <th className='px-10 py-4 border-b'>Action</th> : <></>}
         </thead>
         <tbody>
-          {rawJson.map((data) => <tr 
+          {hostelList.map((data) => <tr 
           className='text-center border-b py-5 cursor-pointer hover:bg-gray-300'>
             {checkbox ? <td><input type="checkbox" id="mycheckbox"
              onChange={handleCheck} name={data.Room} value={data.Room} /></td> : <></>}
-              <td className=' py-3 '>{data.Blocks}</td>
-              <td className=' py-3 '>{data.Room}</td>
-              <td className=' py-3 '>{data.Bedspace}</td>
-              <td className=' py-3 '>{data.Allocation}</td>
-              <td className=' py-3 '>{data.Unallocated}</td>
+              <td className=' py-3 '>Awo</td>
+              <td className=' py-3 '>{data.block}</td>
+              <td className=' py-3 '>{data.roomNo}</td>
+              <td className=' py-3 '>{data.bedNo}</td>
+              <td className=' py-3 '>{data.allocated ? "True" : "False"}</td>
+              {checkbox ?    <td className=' py-3'><select>
+                <option>Available</option>
+                <option>Occupied</option>
+                <option>Faulty</option>
+                 <option>Reserved</option>
+              </select></td> : <></>}
           </tr>)}
         </tbody>
-      </table>
+      </table> : <Shimmer />}
       
     </section>
   </div>

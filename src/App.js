@@ -6,10 +6,15 @@ import Hostel from './pages/admin/hostels'
 import Allocation from './pages/admin/allocation'
 import Dashboard from './pages/admin/Dashboard';
 import Students from './pages/admin/students'
+import Login from './pages/login';
+import { useAuth } from './auth/authProvider';
 
 function App() {
+  const { authToken } = useAuth()
+  const authT = sessionStorage.getItem('authToken');
   return (
-    <div className="w-full flex overflow-hidden ">
+ <>
+   { !authT ? <Login /> :    <div className="w-full flex overflow-hidden ">
    <Navbar />
 
    {/* brower router would be used so the Navbar won't be re-rendered when a page is selected */}
@@ -23,7 +28,8 @@ function App() {
     </Route>
    </Routes>
    </div>
-    </div>
+    </div>}
+ </>
   );
 }
 

@@ -1,68 +1,36 @@
+import { useState , useEffect} from 'react'
 import React from 'react'
+import axios from 'axios'
+import Shimmer  from '../../components/skeleton/shimer'
+
+const rawJson = []
 
 
-const rawJson = [{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-},{
-  Blocks : 1,
-  Room : 23,
-  Bedspace : 320,
-  Allocation : 245,
-  Unallocated : 30
-}]
-function Dashboard() {
+
+  function Dashboard() {
+    const [showlist, setShow ]=  useState(false)
+    const [hostelList, setHostel ] = useState(rawJson)
+
+  useEffect(()=>{
+    const url = 'https://hmsbackend-c36l.onrender.com/admin/getHostelRecord'
+const token = sessionStorage.getItem("authToken")
+const headers = {
+  "Authorization" : `${token} `
+}
+ 
+    axios.get(url,{headers})
+    .then( (res) => {
+      if(res.data.success ){
+        let list = res.data.data
+         setHostel(list)
+        setShow(true)
+        console.log('the list', list)
+      } 
+    
+      })
+    .catch(err => console.log("error ", err))
+  }, [showlist])
+ 
   return (
     <div>
       <div className=' flex justify-between  bg-white m-2 py-5  px-4'>
@@ -76,26 +44,26 @@ function Dashboard() {
             <span className='my-auto'>example@email.com</span>
          </div>
       </div>
-     <div className='bg-white mx-10 flex justify-center rounded-lg'>
-     <table className='h-10/12 ' >
+     <section className='bg-white mx-3 flex justify-center rounded-lg'>
+   { showlist ?  <table className='h-10/12 ' >
         <thead className='text-center text-blue-900'>
+          <th className='px-10 py-4 border-b'>Hostel</th>
           <th className='px-10 py-4 border-b'>Blocks</th>
           <th className='px-10 py-3 border-b'>Rooms</th>
-          <th className='px-10 py-3 border-b'>Bedpsace</th>
           <th className='px-10 py-3 border-b'>Allocated</th>
-          <th className='px-10 py-3 border-b'>Unallocated</th>
+          <th className='px-10 py-3 border-b'>Bedspace</th>
         </thead>
         <tbody>
-          {rawJson.map((data) => <tr className='text-center border-b py-5'>
-              <td className=' py-3 '>{data.Blocks}</td>
-              <td className=' py-3 '>{data.Room}</td>
-              <td className=' py-3 '>{data.Bedspace}</td>
-              <td className=' py-3 '>{data.Allocation}</td>
-              <td className=' py-3 '>{data.Unallocated}</td>
+          {hostelList.map((data) => <tr className='text-center border-b py-5'>
+            <td className=' py-3 '>{data.hostel_name}</td>
+              <td className=' py-3 '>{data.block}</td>
+              <td className=' py-3 '>{data.roomNo}</td>
+              <td className=' py-3 '>{data.allocated ? "True"  : "false"}</td>
+              <td className=' py-3 '>{data.bedNo}</td>
           </tr>)}
         </tbody>
-      </table>
-     </div>
+      </table> : <Shimmer />} 
+     </section>
     </div>
   )
 }

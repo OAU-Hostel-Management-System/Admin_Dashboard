@@ -1,218 +1,38 @@
-import React, {useEffect, useState,useRef} from 'react'
+import React, {useEffect, useState} from 'react'
 import Idcard  from '../../components/idCard'
+import axios from 'axios'
+import Shimmer from '../../components/skeleton/shimer'
 
-let rawJson = [
-  {
-    "id": 1,
-    "matric": "A12345",
-    "full_name": "John Doe",
-    "bedspace": "Room 101",
-    "payment_status": "Paid",
-    "gender": "Male",
-    "session": "2023-2024",
-    "department": "Engineering"
-  },
-  {
-    "id": 2,
-    "matric": "B67890",
-    "full_name": "Jane Smith",
-    "bedspace": "Room 102",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2022-2023",
-    "department": "Computer Science"
-  },
-  {
-    "id": 3,
-    "matric": "C54321",
-    "full_name": "Alice Johnson",
-    "bedspace": "Room 103",
-    "payment_status": "Not Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Biology"
-  },
-  {
-    "id": 4,
-    "matric": "D98765",
-    "full_name": "Michael Brown",
-    "bedspace": "Room 104",
-    "payment_status": "Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Mathematics"
-  },
-  {
-    "id": 5,
-    "matric": "E23456",
-    "full_name": "Emily Wilson",
-    "bedspace": "Room 105",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Physics"
-  },
-  {
-    "id": 6,
-    "matric": "F76543",
-    "full_name": "David Lee",
-    "bedspace": "Room 106",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Chemistry"
-  },
-  {
-    "id": 7,
-    "matric": "G87654",
-    "full_name": "Sophia Clark",
-    "bedspace": "Room 107",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "History"
-  },
-  {
-    "id": 8,
-    "matric": "H34567",
-    "full_name": "William Turner",
-    "bedspace": "Room 108",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "English"
-  },
-  {
-    "id": 9,
-    "matric": "I45678",
-    "full_name": "Olivia Davis",
-    "bedspace": "Room 109",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Economics"
-  },
-  {
-    "id": 10,
-    "matric": "J56789",
-    "full_name": "Daniel Martinez",
-    "bedspace": "Room 110",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Psychology"
-  },
-  {
-    "id": 11,
-    "matric": "K67890",
-    "full_name": "Sophie Anderson",
-    "bedspace": "Room 111",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Sociology"
-  },
-  {
-    "id": 12,
-    "matric": "L78901",
-    "full_name": "James White",
-    "bedspace": "Room 112",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Political Science"
-  },
-  {
-    "id": 13,
-    "matric": "M89012",
-    "full_name": "Emma Harris",
-    "bedspace": "Room 113",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Geology"
-  },
-  {
-    "id": 14,
-    "matric": "N90123",
-    "full_name": "Alexander Taylor",
-    "bedspace": "Room 114",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Philosophy"
-  },
-  {
-    "id": 15,
-    "matric": "O01234",
-    "full_name": "Chloe Wilson",
-    "bedspace": "Room 115",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Art History"
-  },
-  {
-    "id": 16,
-    "matric": "P12345",
-    "full_name": "Benjamin Clark",
-    "bedspace": "Room 116",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Music"
-  },
-  {
-    "id": 17,
-    "matric": "Q23456",
-    "full_name": "Ava Adams",
-    "bedspace": "Room 117",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Drama"
-  },
-  {
-    "id": 18,
-    "matric": "R34567",
-    "full_name": "Christopher Turner",
-    "bedspace": "Room 118",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Architecture"
-  },
-  {
-    "id": 19,
-    "matric": "S45678",
-    "full_name": "Mia Davis",
-    "bedspace": "Room 119",
-    "payment_status": "Paid",
-    "gender": "Female",
-    "session": "2023-2024",
-    "department": "Environmental Science"
-  },
-  {
-    "id": 20,
-    "matric": "T56789",
-    "full_name": "William Johnson",
-    "bedspace": "Room 120",
-    "payment_status": "Not Paid",
-    "gender": "Male",
-    "session": "2022-2023",
-    "department": "Chemical Engineering"
-  }
-]
+let rawJson = []
 
 
 function Students() {
    const [studentList, setList] = useState(rawJson)
+   const [showlist, setShow ]=  useState(false)
    const [idDetails, setIdDetaials ] =  useState({
     name : '', matric : '', gender : '', department : "", session : ""})
    const [visibility, setVisibility ]= useState(false)
 
+   let listX;
 
-
+   useEffect(()=>{
+    const url = 'https://hmsbackend-c36l.onrender.com/admin/studentRecord'
+    const token = sessionStorage.getItem("authToken")
+    const headers = {
+  "Authorization" : `${token} `
+}
+ 
+    axios.get(url,{headers})
+    .then( (res) => {
+      if(res.data.success ){
+      listX = res.data.data
+         setList(listX) 
+        setShow(true)
+      } 
+    
+      })
+    .catch(err => console.log("error ", err))
+  }, [showlist])
 
  
   return (
@@ -231,12 +51,12 @@ function Students() {
         </div>
         <input 
         onChange={(evt) => { 
-          setList(rawJson)
+          setList(listX)
          if(evt.target.value == ''){
-          setList(rawJson)
+          setList(listX)
          }else{
           const updatedList = studentList.filter((list)=> 
-          list.full_name.includes(evt.target.value) || list.matric.includes(evt.target.value))
+           list.matricNo.includes(evt.target.value))
          
           setList(updatedList)
          }
@@ -319,39 +139,41 @@ function Students() {
 </button>
        </div>
       </div>
-      <table className='h-10/12 mt-10 w-full' >
+    { showlist ?  <table className='h-10/12 mt-10 w-full' >
         <thead className='text-center text-white bg-blue-900'>
           <tr>
           <th className='px-10 py-4 border-b'>Matric</th>
-          <th className='px-10 py-3 border-b'>Full name</th>
           <th className='px-10 py-3 border-b'>Bedspace</th>
-          <th className='px-10 py-3 border-b'>Payment status</th>
+          <th className='px-10 py-3 border-b'>Paid</th>
+          <th className='px-10 py-3 border-b'></th>
           </tr>
         </thead>
         <tbody>
           {studentList.map((data) => <tr 
-          onClick={ ()=>{
+          className='text-center border-b py-5 cursor-pointer hover:bg-gray-300'>
+              <td className=' py-3 '>{data.matricNo}</td>
+              <td className=' py-3 '>{data.bedspace}</td>
+              {data.users_paid ?  
+              <td className=' py-3 text-green-600'>Paid</td> : 
+              <td className=' py-3 text-red-600'>False</td>}
+               <td className=' py-3 '><svg    onClick={ ()=>{
             setIdDetaials({ 
               name : data.full_name,
-               matric : data.matric,
+               matric : data.matricNo,
               bedspace : data.bedspace,
               department : data.department,
               session : data.session,
               gender : data.gender,
-            payment_status : data.payment_status})
+            payment_status : data.users_paid ? "Paid" : "False"})
             setVisibility(true)
           }
-          } 
-          className='text-center border-b py-5 cursor-pointer hover:bg-gray-300'>
-              <td className=' py-3 '>{data.matric}</td>
-              <td className=' py-3 '>{data.full_name}</td>
-              <td className=' py-3 '>{data.bedspace}</td>
-              {data.payment_status == 'Paid'? 
-              <td className=' py-3 text-green-600'>{data.payment_status}</td> : 
-              <td className=' py-3 text-red-600'>{data.payment_status}</td>}
+          }  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+</svg></td>
           </tr>)}
+         
         </tbody>
-      </table>
+      </table> : <Shimmer />}
       
     </section>
   </div>
