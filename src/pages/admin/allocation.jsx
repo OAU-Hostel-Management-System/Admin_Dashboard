@@ -104,70 +104,107 @@ const headers = {
   .catch(err => console.log("error ", err))
 }, [showlist])
   return (
-    <div className = 'bg-[#EBEBEB] h-full'>
-        <Topbar />
-        <form className = ' border-4 bg-white grid grid-cols-2  p-14 ' >
-          <div className = 'flex flex-col text-left gap-1'>
+    <div className="bg-[#EBEBEB] h-full">
+      <Topbar />
+      <form className=" border-4 bg-white   p-14 ">
+        <div className="grid grid-cols-2">
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Matric No</label>
-            <input type="text" placeholder = 'CSC/2018/419' 
-            onChange={(evt)=>getStudent(evt)} 
-            className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3 outline-blue-200'/>
+            <input
+              type="text"
+              placeholder="CSC/2018/419"
+              onChange={(evt) => getStudent(evt)}
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3 outline-blue-200"
+            />
           </div>
-          <div className = 'flex flex-col text-left gap-1'>
+          {/* <div className = 'flex flex-col text-left gap-1'>
             <label htmlFor="">Email</label>
             <input type="email" placeholder = 'omoldonTire@gmail.com' className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200' readOnly/>
-          </div>
-          <div className = 'flex flex-col text-left gap-1'>
+          </div> */}
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Name</label>
-            <input type="text"  value={student.name} placeholder = 'Umoh Samuel Godwin' className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200'readOnly/>
+            <input
+              type="text"
+              value={student.name}
+              placeholder="Umoh Samuel Godwin"
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200"
+              readOnly
+            />
           </div>
-           <div className = 'flex flex-col text-left gap-1'>
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Department</label>
-            <input type="text" value={student.dept} placeholder = 'Computer with Mathematics' 
-            className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200' readOnly/>
+            <input
+              type="text"
+              value={student.dept}
+              placeholder="Computer with Mathematics"
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200"
+              readOnly
+            />
           </div>
-           <div className = 'flex flex-col text-left gap-1'>
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Hostel</label>
-            <select onChange={(evt) => getblocks(evt)} name="hostel" id="hostel" className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200'>
-            
-                {hall.map((hal)=>  <option value={hal}>{hal}</option> )}
+            <select
+              onChange={(evt) => getblocks(evt)}
+              name="hostel"
+              id="hostel"
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200"
+            >
+              {hall.map((hal, index) => (
+                <option key={index} value={hal}>
+                  {hal}
+                </option>
+              ))}
             </select>
           </div>
-          <div className = 'flex flex-col text-left gap-1'>
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Block</label>
-            <select  onChange={(evt) => getRooms(evt)}
-             name="block" id="block" className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200'>
-               <option value="">Select block</option>
-                {blocks.map( block => <option value={block}>{block}</option>)}
+            <select
+              onChange={(evt) => getRooms(evt)}
+              name="block"
+              id="block"
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200"
+            >
+              <option value="">Select block</option>
+              {blocks.map((block) => (
+                <option value={block}>{block}</option>
+              ))}
             </select>
           </div>
-          <div className = 'flex flex-col text-left gap-1'>
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Room</label>
             <select
-            name="room" id="room"
-             className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200'>
-            <option value="">Select block</option>
-             { rooms.map(room =>  <option value={room}>{room}</option>)}
+              name="room"
+              id="room"
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200"
+            >
+              <option value="">Select block</option>
+              {rooms.map((room) => (
+                <option value={room}>{room}</option>
+              ))}
             </select>
           </div>
-          <div className = 'flex flex-col text-left gap-1'>
+          <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Bedspace</label>
-            <select name="bedspace" id="bedspace" className = 'mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200'>
+            <select
+              name="bedspace"
+              id="bedspace"
+              className="mb-4 border border-slate-400 rounded-sm w-2/3 p-3  outline-blue-200"
+            >
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3"> 3</option>
               <option value="4"> 4</option>
             </select>
           </div>
-        
-            <button className = 'bg-[#113885] border rounded-lg text-center text-white text-lg px-16 ml-auto py-2'>Allocate</button>
-          
-        
-        </form>
-      
+        </div>
+      <div className='flex justify-center'>
+        <button className="bg-[#113885] rounded-lg text-center text-white text-lg px-16 py-2">
+          Allocate
+        </button>
+      </div>
+      </form>
     </div>
-    
-  )
+  );
 }
 
 export default Allocation
