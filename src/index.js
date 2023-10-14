@@ -3,25 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import { AuthProvider } from './auth/authProvider';
 import { BrowserRouter } from 'react-router-dom';
 import Login from './pages/login';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 // handling the admin authentication here
 // function would be used to determine admin authentication if true or false
-const isAuthenticated = true;
+// const { authToken } = useAuth();
+
 const view =  window.innerWidth 
+
 
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-    { view  > 400 ? 
-    <>
-    {isAuthenticated ? <App /> : <Login />} </> : 
-    <div className='bg-black text-white text-center py-20'><h2 className='text-xl'>No dey whine me Boss!! <br/> change to desktop view</h2></div>
-    }
+  <AuthProvider>
+   <App />
+  </AuthProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

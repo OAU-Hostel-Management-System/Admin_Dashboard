@@ -3,11 +3,11 @@
 const Idcard = ({info})=>{
     const fetchedUrl = 'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80'
     return (
-      <div className="w-screen h-screen fixed top-0 left-0 z-20 bg-black bg-opacity-50
+      <div className="w-screen transition duration-300 h-screen fixed top-0 left-0 z-20 bg-black bg-opacity-50
 
       backdrop-filter backdrop-blur-sm ">
          
-         <div className="w-[550px] h-[350px] overflow-hidden  bg-white
+         <div className="w-[550px] h-[350px]  overflow-hidden  bg-white
         fixed top-48 z-20 rounded-xl right-72">
             <div className="bg-green-600 text-black flex 
              rounded-t-xl text-center h-[70px]  px-5 py-3">
