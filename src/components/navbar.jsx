@@ -1,17 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ showSideBar, setShowSideBar }) {
   return (
-    <div className="border-r h-screen w-1/4 fixed  pt-5">
+    <div
+      className={` ${showSideBar ? "block" : "hidden"} hidden md:block bg-white border-r h-screen w-1/4 fixed  pt-5`}
+    >
       <div className="mb-5 text-center">
         <img src="./oau.svg" className="mx-auto h-36" alt="oau logo" />
         <span className="text-center">Obefemi Awolowo University</span> <br />
         <span className="text-sm">Hostel Management Portal</span>
       </div>
-      <ul className="">
+      <ul>
         <li className="py-6 hover:border-r-4 hover:font-light  text-left pl-10 hover:text-[#113885] hover:border-r-[#113885] cursor-pointer hover:bg-[#CFDEFD]">
-          <Link to="/" className="flex gap-3">
+          <Link to="/" className="flex gap-3 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -26,7 +28,7 @@ function Navbar() {
           </Link>
         </li>
         <li className="py-6 hover:border-r-4 hover:font-light text-left pl-10 hover:text-[#113885] hover:border-r-[#113885] cursor-pointer hover:bg-[#CFDEFD]">
-          <Link to="/custom" className="flex gap-3">
+          <Link to="/custom" className="flex gap-3 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -43,7 +45,7 @@ function Navbar() {
           </Link>
         </li>
         <li className="py-6 hover:border-r-4 hover:font-light text-left pl-10 hover:text-[#113885] hover:border-r-[#113885] cursor-pointer hover:bg-[#CFDEFD]">
-          <Link to="/hostel_records" className="flex gap-3">
+          <Link to="/hostel_records" className="flex gap-3 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -59,7 +61,7 @@ function Navbar() {
         </li>
 
         <li className="py-6 hover:border-r-4 hover:font-light text-left pl-10 hover:text-[#113885] hover:border-r-[#113885] cursor-pointer hover:bg-[#CFDEFD]">
-          <Link to="/student_records" className="flex gap-3">
+          <Link to="/student_records" className="flex gap-3 items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -78,7 +80,7 @@ function Navbar() {
           onClick={() => sessionStorage.removeItem("authToken")}
           className="py-6 text-left pl-10 hover:font-light hover:bg-red-100 hover:text-red-500 cursor-pointer"
         >
-          <Link to="/" className="flex gap-3">
+          <Link to="/" className="flex gap-3 items-center">
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"

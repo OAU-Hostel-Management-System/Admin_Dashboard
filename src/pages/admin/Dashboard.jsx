@@ -2,12 +2,15 @@ import { useState , useEffect, useRef} from 'react'
 import React from 'react'
 import axios from 'axios'
 import Shimmer  from '../../components/skeleton/shimer'
+import Navbar from '../../components/navbar'
 
 const rawJson = []
 
   function Dashboard() {
     const [showlist, setShow] = useState(false);
     const [hostelList, setHostel] = useState(rawJson);
+
+    const [showSideBar, setShowSideBar] = useState(false);
 
     // infinite scroll
     const [hasMore, setHasMore] = useState(true);
@@ -67,7 +70,7 @@ const rawJson = []
 
     return (
       <div>
-        <div className=" flex justify-between  bg-white m-2 py-5  px-4">
+        {/* <div className=" flex justify-between  bg-white m-2 py-5  px-4">
           <span>Home</span>
           <div className="flex gap-3 -mt-1 mr-10">
             <span className="my-auto">
@@ -89,11 +92,11 @@ const rawJson = []
             />
             <span className="my-auto">example@email.com</span>
           </div>
-        </div>
-        <section className="bg-white mx-3 flex flex-col justify-center rounded-lg">
+        </div> */}
+        <section className="bg-white lmx-3 flex flex-col justify-center rounded-lg">
           <div className="flex justify-center">
             {showlist ? (
-              <table className="h-10/12 w-full ">
+              <table className="h-10/12 w-full responsive-table ">
                 {/* <thead className='text-center text-blue-900'>
           <th className='px-10 py-4 border-b'>Hostel</th>
           <th className='px-10 py-4 border-b'>Blocks</th>

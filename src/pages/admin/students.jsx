@@ -36,8 +36,8 @@ function Students() {
 
  
   return (
-    <div className="m-2">
-      <div className=" flex justify-between  bg-white m-2 py-5  px-4">
+    <div className="lm-2">
+      {/* <div className=" flex justify-between  bg-white m-2 py-5  px-4">
         <form>
           <label
             for="default-search"
@@ -115,7 +115,7 @@ function Students() {
           />
           <span className="my-auto">example@email.com</span>
         </div>
-      </div>
+      </div> */}
 
       <section className="bg-white ml-2 pt-4 mr-2 rounded-lg ">
         {visibility ? (

@@ -106,9 +106,9 @@ const headers = {
   .catch(err => console.log("error ", err))
 }, [showlist])
   return (
-    <div className="bg-[#EBEBEB] h-full">
-      <Topbar />
-      <form className=" border-4 bg-white   p-14 ">
+    <div className="bg-[#EBEBEB] h-full ">
+      {/* <Topbar /> */}
+      <form className=" border-4 bg-white   p-14 rounded-lg">
         <div className="grid grid-cols-2">
           <div className="flex flex-col text-left gap-1">
             <label htmlFor="">Matric No</label>
@@ -199,11 +199,11 @@ const headers = {
             </select>
           </div>
         </div>
-      <div className='flex justify-center'>
-        <button className="bg-[#113885] rounded-lg text-center text-white text-lg px-16 py-2">
-          Allocate
-        </button>
-      </div>
+        <div className="flex justify-center">
+          <button className="bg-[#113885] rounded-lg text-center text-white text-lg px-16 py-2">
+            Allocate
+          </button>
+        </div>
       </form>
     </div>
   );

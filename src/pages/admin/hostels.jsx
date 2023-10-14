@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Shimmer from "../../components/skeleton/shimer";
+import Topbar from "../../components/topbar";
 
 function Hostels() {
   const [checkbox, setCheckBox] = useState(false);
@@ -64,8 +65,8 @@ function Hostels() {
   // };
 
   return (
-    <div className="m-2">
-      <div className=" flex justify-between  bg-white m-2 py-5  px-4">
+    <div className="lm-2 ">
+      {/* <div className=" flex justify-between  bg-white m-2 py-5  px-4">
         <span className=" text-blue-800 text-xl ">Hostels Record</span>
         <div className="flex gap-3  -mt-1 mr-10">
           <span className="my-auto">
@@ -87,9 +88,13 @@ function Hostels() {
           />
           <span className="my-auto">example@email.com</span>
         </div>
-      </div>
+      </div> */}
+{/* <div className="w-full md:ml-[350px] relative md:bg-[#EBEBEB] lmin-h-screen md:p-4 flex flex-col scroll-smooth"> */}
 
-      <section className="bg-white ml-2 pt-4 mr-2 rounded-lg ">
+      {/* <Topbar /> */}
+{/* </div> */}
+
+      <section className="bg-white lml-2 pt-4 lmr-2 rounded-lg">
         {checkbox ? (
           <></>
         ) : (
