@@ -1,10 +1,18 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 
 function Navbar({ showSideBar, setShowSideBar }) {
+
+  const navigate = useNavigate();
+
+
   return (
     <div
-      className={` ${showSideBar ? "block" : "hidden"} hidden md:block bg-white border-r h-screen w-1/4 fixed  pt-5`}
+      className={` ${
+        showSideBar ? "block" : "hidden"
+      } hidden md:block bg-white border-r h-screen w-1/4 fixed  pt-5`}
     >
       <div className="mb-5 text-center">
         <img src="./oau.svg" className="mx-auto h-36" alt="oau logo" />
@@ -77,10 +85,15 @@ function Navbar({ showSideBar, setShowSideBar }) {
         </li>
 
         <li
-          onClick={() => sessionStorage.removeItem("authToken")}
+          // onClick={() => sessionStorage.removeItem("authToken")}
+          onClick={() => {
+            sessionStorage.removeItem("authToken");
+            // Redirect to the login page
+            navigate(0);
+          }}
           className="py-6 text-left pl-10 hover:font-light hover:bg-red-100 hover:text-red-500 cursor-pointer"
         >
-          <Link to="/" className="flex gap-3 items-center">
+          <Link className="flex gap-3 items-center">
             {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"

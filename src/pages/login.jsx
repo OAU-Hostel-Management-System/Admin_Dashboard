@@ -4,12 +4,15 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useAuth } from '../auth/authProvider'
 import ReactLoading from "react-loading";
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+  
  const [loginDetails, setLoginDetails ] = useState({ username : "", password : ""})
  const [errorMsg, setError ] = useState("")
  const { login } = useAuth();
  const [isLoading, setIsLoading] = useState(false);
+ const navigate = useNavigate();
 
  const url = "https://hmsbackend-c36l.onrender.com/auth/signin"
 
@@ -24,6 +27,7 @@ const Login = () => {
          if (res.status == 200 && res.success) {
            console.log("the data", res);
            setIsLoading(false);
+
          }
        })
        .catch((error) => {

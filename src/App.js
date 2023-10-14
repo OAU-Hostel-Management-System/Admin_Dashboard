@@ -10,7 +10,12 @@ import Login from './pages/login';
 import { useAuth } from './auth/authProvider';
 import PageLayout from './components/pageLayout';
 
+
+
 function App() {
+ 
+
+
   const { authToken } = useAuth()
   const authT = sessionStorage.getItem('authToken');
   return (
@@ -18,10 +23,7 @@ function App() {
       {!authT ? (
         <Login />
       ) : (
-        <div className="w-full flex overflow-hidden ">
-          {/* <Navbar /> */}
-
-          {/* brower router would be used so the Navbar won't be re-rendered when a page is selected */}
+        
           <div className="lw-3/4 lml-auto overflow-hidden bg-[#EBEBEB]">
             <Routes>
               <Route
@@ -32,7 +34,6 @@ function App() {
                   </PageLayout>
                 }
               >
-                {" "}
               </Route>
               <Route
                 path="/hostel_records"
@@ -42,7 +43,6 @@ function App() {
                   </PageLayout>
                 }
               >
-                {" "}
               </Route>
               <Route
                 path="/custom"
@@ -52,7 +52,6 @@ function App() {
                   </PageLayout>
                 }
               >
-                {" "}
               </Route>
               <Route
                 path="/student_records"
@@ -62,12 +61,10 @@ function App() {
                   </PageLayout>
                 }
               >
-                {" "}
               </Route>
               <Route path="/list" element={<Dashboard />}></Route>
             </Routes>
           </div>
-        </div>
       )}
     </>
   );
