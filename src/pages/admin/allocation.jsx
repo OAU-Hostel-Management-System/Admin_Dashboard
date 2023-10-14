@@ -18,7 +18,7 @@ function Allocation() {
  
  const  getStudent = (evt) =>{      
   const detail = evt.target.value;
-  if(detail.length > 11) {
+  if(detail.length >= 11) {
   const url = `https://hmsbackend-c36l.onrender.com/admin/fetchStudentInfo?matricNo=${detail}`
   const token = sessionStorage.getItem("authToken")
   const headers = {
@@ -51,8 +51,10 @@ const headers = {
       details.map( detail =>{
           if(!listed.includes(detail)){
             listed.push(detail)
+            console.log("=====>", detail);
           }
       })
+      console.log("=====>", listed);
       setBlocks(listed)
     })
  }

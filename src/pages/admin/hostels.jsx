@@ -7,11 +7,13 @@ function Hostels() {
   const [filter, setFilter] = useState({
     block: "",
     roomNo: "",
-    hostel: "Awo",
+    hostel_name: "Awo",
   });
   const [showlist, setShow] = useState(false);
   const [hostelList, setHostel] = useState([]);
   const changeList = [];
+    const [page, setPage] = useState(1);
+
 
   const filterList = (url, headers) => {
     axios
@@ -29,7 +31,8 @@ function Hostels() {
   useEffect(() => {
     const url =
       filter.roomNo.length > 1
-        ? `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&block=${filter.block}&roomNo=${filter.roomNo}`
+        ? // ? `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&block=${filter.block}&roomNo=${filter.roomNo}`
+          `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?page=${page}&hostel_name=${filter.hostel_name}&block=${filter.block}&roomNo=${filter.roomNo}`
         : "https://hmsbackend-c36l.onrender.com/admin/getHostelRecord";
     const token = sessionStorage.getItem("authToken");
     const headers = {
@@ -45,6 +48,7 @@ function Hostels() {
             let list = res.data.data;
             setHostel(list);
             setShow(true);
+            console.log("=====>", list);
           }
         })
         .catch((err) => console.log("error ", err));
@@ -139,13 +143,16 @@ function Hostels() {
           <div className="mt-3 flex gap-4">
             <div class="relative w-1/6 border-none">
               <select
+                onChange={(evt) => {
+                  setFilter({ ...filter, hostel_name: evt.target.value });
+                }}
                 class=" 
          appearance-none border border-black bg-white inline-block py-3 pl-3 pr-8 
          rounded leading-tight w-full"
               >
                 <option class="pt-6"> Hostels </option>
                 <option>Angola Hall of Residence</option>
-                <option>Awolowo Hall of Residence</option>
+                <option value="Awo">Awolowo Hall of Residence</option>
                 <option>Moremi Hall of Residence</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
@@ -234,7 +241,7 @@ function Hostels() {
                   ) : (
                     <></>
                   )} */}
-                  <td className=" py-3 ">Awo</td>
+                  <td className=" py-3 ">{data.hostel_name}</td>
                   <td className=" py-3 ">{data.block}</td>
                   <td className=" py-3 ">{data.roomNo}</td>
                   <td className=" py-3 ">{data.bedNo}</td>
