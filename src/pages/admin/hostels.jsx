@@ -13,7 +13,6 @@ function Hostels() {
   const [showlist, setShow] = useState(false);
   const [hostelList, setHostel] = useState([]);
   const changeList = [];
-    const [page, setPage] = useState(1);
 
 
   const filterList = (url, headers) => {
@@ -32,8 +31,7 @@ function Hostels() {
   useEffect(() => {
     const url =
       filter.roomNo.length > 1
-        ? // ? `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&block=${filter.block}&roomNo=${filter.roomNo}`
-          `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?page=${page}&hostel_name=${filter.hostel_name}&block=${filter.block}&roomNo=${filter.roomNo}`
+       ? `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&block=${filter.block}&roomNo=${filter.roomNo}`
         : "https://hmsbackend-c36l.onrender.com/admin/getHostelRecord";
     const token = sessionStorage.getItem("authToken");
     const headers = {
@@ -64,6 +62,29 @@ function Hostels() {
   //   }
   // };
 
+  // daddy 
+  //  function onIntersection(entries) {
+  //    const firstEntry = entries[0];
+  //    if (firstEntry.isIntersecting && hasMore) {
+  //      fetchMoreItems();
+  //    }
+  //  }
+
+  //  useEffect(() => {
+  //    // BigSam
+  //    const observer = new IntersectionObserver(onIntersection);
+  //    if (observer && elementRef.current) {
+  //      observer.observe(elementRef.current);
+  //    }
+
+  //    // cleanup ftn
+  //    return () => {
+  //      if (observer) {
+  //        observer.disconnect();
+  //      }
+  //    };
+  //  }, [hostelList]);
+
   return (
     <div className="lm-2 ">
       {/* <div className=" flex justify-between  bg-white m-2 py-5  px-4">
@@ -89,10 +110,10 @@ function Hostels() {
           <span className="my-auto">example@email.com</span>
         </div>
       </div> */}
-{/* <div className="w-full md:ml-[350px] relative md:bg-[#EBEBEB] lmin-h-screen md:p-4 flex flex-col scroll-smooth"> */}
+      {/* <div className="w-full md:ml-[350px] relative md:bg-[#EBEBEB] lmin-h-screen md:p-4 flex flex-col scroll-smooth"> */}
 
       {/* <Topbar /> */}
-{/* </div> */}
+      {/* </div> */}
 
       <section className="bg-white lml-2 pt-4 lmr-2 rounded-lg">
         {checkbox ? (
@@ -231,8 +252,11 @@ function Hostels() {
               )}
             </thead>
             <tbody>
-              {hostelList.map((data) => (
-                <tr className="text-center border-b py-5 cursor-pointer hover:bg-gray-300">
+              {hostelList.map((data, index) => (
+                <tr
+                  key={index}
+                  className="text-center border-b py-5 cursor-pointer hover:bg-gray-300"
+                >
                   {/* {checkbox ? (
                     <td>
                       <input

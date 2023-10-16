@@ -26,6 +26,7 @@ function Students() {
     .then( (res) => {
       if(res.data.success ){
       listX = res.data.data
+      console.log("listX =====>", listX);
          setList(listX) 
         setShow(true)
       } 
@@ -258,8 +259,8 @@ function Students() {
               </tr>
             </thead>
             <tbody>
-              {studentList.map((data) => (
-                <tr className="text-center border-b py-5 cursor-pointer hover:bg-gray-300">
+              {studentList.map((data, index) => (
+                <tr key={index} className="text-center border-b py-5 cursor-pointer hover:bg-gray-300">
                   <td className=" py-3 ">{data.matricNo}</td>
                   <td className=" py-3 ">{data.bedspace}</td>
                   {data.users_paid ? (
