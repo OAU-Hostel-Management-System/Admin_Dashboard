@@ -9,6 +9,7 @@ import Students from './pages/admin/students'
 import Login from './pages/login';
 import { useAuth } from './auth/authProvider';
 import PageLayout from './components/pageLayout';
+import IdCard from './components/idCard';
 
 
 
@@ -58,6 +59,15 @@ function App() {
                 element={
                   <PageLayout>
                     <Students />
+                  </PageLayout>
+                }
+              >
+              </Route>
+              <Route
+                path="/idcardooo"
+                element={
+                  <PageLayout>
+                    <IdCard />
                   </PageLayout>
                 }
               >
