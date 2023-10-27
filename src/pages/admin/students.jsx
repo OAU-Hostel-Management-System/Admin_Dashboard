@@ -178,14 +178,23 @@ function Students() {
           <div className="mt-3 flex gap-4">
             <div class="relative w-1/6 border-none">
               <select
+              onChange={(evt)=>{
+                const selecedHostel = evt.target.value;
+                setList(formerList);
+                  const updatedList = formerList.filter((list) =>
+                    list.bedspace.includes(selecedHostel)
+                  );
+                  setList(updatedList);
+
+              }}
                 class=" 
          appearance-none border border-black bg-white inline-block py-3 pl-3 pr-8 
          rounded leading-tight w-full"
               >
                 <option class="pt-6"> Hostels </option>
-                <option>Angola Hall of Residence</option>
-                <option>Awolowo Hall of Residence</option>
-                <option>Moremi Hall of Residence</option>
+                <option value="Angola">Angola Hall of Residence</option>
+                <option value="Awo">Awolowo Hall of Residence</option>
+                <option value="Moremi">Moremi Hall of Residence</option>
               </select>
               <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                 <i class="fas fa-chevron-down text-gray-400"></i>
@@ -193,6 +202,14 @@ function Students() {
             </div>
             <div class="relative w-1/6 border-none">
               <select
+               onChange={(evt)=>{
+                const selecedBlock = evt.target.value;
+                  const updatedList = studentList.filter((list) =>
+                    list.bedspace.includes(selecedBlock)
+                  );
+                  setList(updatedList);
+
+              }}
                 class=" 
          appearance-none border border-black bg-white inline-block py-3 pl-3 pr-8 
          rounded leading-tight w-full"
