@@ -1,7 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Shimmer from "../../components/skeleton/shimer";
-import Topbar from "../../components/topbar";
+import ReactLoading from "react-loading";
+
+
+
+let hostlist =[]
+const Updatedlist = {
+  updates : []
+}
+
 
 function Hostels() {
   const [checkbox, setCheckBox] = useState(false);
@@ -12,8 +20,39 @@ function Hostels() {
   });
   const [showlist, setShow] = useState(false);
   const [hostelList, setHostel] = useState([]);
-  const changeList = [];
+  const [warn, setWarn ] = useState(false)
+  const [ warnMsg , setWarnmsg ] = useState("")
+  const [isLoading, setIsLoading ] = useState(false)
 
+
+
+  const handleSelect = (e) =>{
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const status = e.target.value;
+    const  infoData = JSON.parse(selectedOption.getAttribute("data-info"));
+    Updatedlist['updates'].push({room_id : 10, status : status})
+  }
+
+  const token = sessionStorage.getItem("authToken")
+  const headers = {
+    "Authorization" : `${token} `,
+    "Access-Control-Allow-Origin" : "https://hmsbackend-c36l.onrender.com",
+    'Content-Type': 'application/json'
+    }
+  const sendUpdates = () =>{
+    setIsLoading(true)
+    axios.put('https://hmsbackend-c36l.onrender.com/admin/updateRoomStatus',Updatedlist,  {headers})
+    .then( (res) => {
+      if(res.data.success){
+        const info = res.data
+        setWarnmsg(info.message)
+        setWarn(true)
+      }
+    })
+    .catch( (err) => {
+      const details = err.response.data
+  }  )
+}
 
   const filterList = (url, headers) => {
     axios
@@ -119,47 +158,27 @@ function Hostels() {
         {checkbox ? (
           <></>
         ) : (
-          <span
-            className="ml-auto bg-red-400"
-            onClick={() => {
-              setCheckBox(true);
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
-              fill="currentColor"
-              className="bi bi-pencil-square ml-auto mr-10 cursor-pointer"
-              viewBox="0 0 16 16"
-            >
-              <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-              <path
-                fill-rule="evenodd"
-                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-              />
-            </svg>
-          </span>
+          <span className='ml-auto w-fit'  onClick={()=>{setCheckBox(true)}}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22"
+           height="22" fill="currentColor"
+            className="bi bi-pencil-square ml-auto mr-10 cursor-pointer" viewBox="0 0 16 16">
+      <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+      <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+    </svg>
+          </span> 
         )}
         {checkbox ? (
-          <span
-            className="ml-auto bg-red-400"
-            onClick={() => {
-              setCheckBox(false);
-              setFilter("");
-            }}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
-              fill="currentColor"
-              class="bi bi-x ml-auto mr-10 cursor-pointer"
-              viewBox="0 0 16 16"
-            >
-              <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-            </svg>
-          </span>
+       <span className='ml-auto flex gap-2 w-fit' onClick={()=>{setCheckBox(false); setFilter('')}}>
+        {
+       !isLoading ? 
+       <button onClick={()=>sendUpdates()} className='px-10 py-1 bg-blue-600 text-white'>Update</button>
+        :    <ReactLoading type="spin" width={"25px"} height={"25px"} />
+       }
+         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-x ml-auto mr-10 cursor-pointer" viewBox="0 0 16 16">
+   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+ </svg> 
+ </span>
         ) : (
           <></>
         )}
@@ -275,11 +294,11 @@ function Hostels() {
                   </td>
                   {checkbox ? (
                     <td className=" py-3">
-                      <select>
-                        <option>Available</option>
-                        <option>Occupied</option>
-                        <option>Faulty</option>
-                        <option>Reserved</option>
+                      <select onChange={(evt) => {handleSelect(evt)}}>
+                        <option value="Available"  data-info={JSON.stringify(data)}>Available</option>
+                        <option value="Occupied"   data-info={JSON.stringify(data)}>Occupied</option>
+                        <option  value="Faulty"  data-info={JSON.stringify(data)}>Faulty</option>
+                        <option value="Reserved"  data-info={JSON.stringify(data)}>Reserved</option>
                       </select>
                     </td>
                   ) : (
@@ -293,6 +312,23 @@ function Hostels() {
           <Shimmer />
         )}
       </section>
+      {warn ?
+       <div className='w-full fixed top-0 backdrop-blur-sm bg-opacity-25 h-full bg-black z-40'>
+        <div className="w-[20rem] px-5 pt-10 rounded-xl border h-[20rem] fixed z-20 top-52 right-[40rem] bg-white shadow-md">
+       <span className='flex flex-col  gap-3'>
+       <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="green" class="bi bi-check2-all ml-20" viewBox="0 0 16 16">
+  <path d="M12.354 4.354a.5.5 0 0 0-.708-.708L5 10.293 1.854 7.146a.5.5 0 1 0-.708.708l3.5 3.5a.5.5 0 0 0 .708 0l7-7zm-4.208 7-.896-.897.707-.707.543.543 6.646-6.647a.5.5 0 0 1 .708.708l-7 7a.5.5 0 0 1-.708 0z"/>
+  <path d="m5.354 7.146.896.897-.707.707-.897-.896a.5.5 0 1 1 .708-.708z"/>
+</svg>
+   <p className=' text-lg mt-2 text-center'>{warnMsg}</p></span>
+  <div className='flex flex-wrap gap-2 mt-5 ml-2'>
+ 
+     <button onClick={()=>{
+      setIsLoading(false)
+      setWarn(false)}} className=' bg-blue-900 text-white px-12 mt-3 py-1 rounded-sm mx-auto'>close</button>
+  </div>
+       </div>
+       </div> : <></>}
     </div>
   );
 }
