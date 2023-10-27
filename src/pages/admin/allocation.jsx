@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Topbar from '../../components/topbar'
 import axios from 'axios'
 
+const hostelDetails ={ hostel_name : "", block : "", roomNo : 0, bedNo : 0, matricNo : ""}
+
 function Allocation() {
   const [hostel, setHostel] = useState({ hostel_name : "", hostel_block : "", room : ""})
   const [showlist, setShow ]=  useState(false)
@@ -16,27 +18,27 @@ function Allocation() {
   const roomUrl = `https://hmsbackend-c36l.onrender.com/admin/getBlockRooms?hostel_name=${hostel.hostel_name}&block=${hostel.hostel_block}`
   const bedspaceUrl = `https://hmsbackend-c36l.onrender.com/admin/getRoomSpace?hostel_name=${hostel.hostel_name}&block=${hostel.hostel_block}&roomNo=${hostel.room}`
  
- const  getStudent = (evt) =>{      
-  const detail = evt.target.value;
-  if(detail.length >= 11) {
-  const url = `https://hmsbackend-c36l.onrender.com/admin/fetchStudentInfo?matricNo=${detail}`
-  const token = sessionStorage.getItem("authToken")
-  const headers = {
-  "Authorization" : `${token} `
-  }
-  
-    axios.get(url,{headers})
-    .then( (res) => {
-      if(res.data.success ){
-        let list = res.data.data;
-        setStudent({...student, name: list.fullName, dept : list.dept })
-        setShow(true )
-      } 
-    
-      })
-    .catch(err => console.log("error ", err))
-  }
- }
+  const  getStudent = (evt) =>{      
+    const detail = evt.target.value;
+    if(detail.length > 11) {
+      hostelDetails.matricNo = detail
+    const url = `https://hmsbackend-c36l.onrender.com/admin/getStudentInfoAllocate?matricNo=${detail}`
+    const token = sessionStorage.getItem("authToken")
+    const headers = {
+    "Authorization" : `${token} `
+    }
+      axios.get(url,{headers})
+      .then( (res) => {
+        if(res.data.success ){
+          let list = res.data.data;
+          setStudent({...student, name: list.fullName, dept : list.dept })
+          setShow(true )
+        } 
+      
+        })
+      .catch(err => console.log("error ", err))
+    }
+   }
  const getblocks = (evt) =>{
   const listed  = []
      const hostel = evt.target.value;

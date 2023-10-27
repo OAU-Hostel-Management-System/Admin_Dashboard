@@ -31,7 +31,7 @@ function Hostels() {
   useEffect(() => {
     const url =
       filter.roomNo.length > 1
-       ? `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&block=${filter.block}&roomNo=${filter.roomNo}`
+       ? `https://hmsbackend-c36l.onrender.com/admin/getHostelRecord?&hostel_name=${filter.hostel_name}&block=${filter.block}&roomNo=${filter.roomNo}`
         : "https://hmsbackend-c36l.onrender.com/admin/getHostelRecord";
     const token = sessionStorage.getItem("authToken");
     const headers = {
@@ -235,11 +235,7 @@ function Hostels() {
         {showlist ? (
           <table className="h-10/12 mt-10 w-full">
             <thead className="text-center text-white bg-blue-900">
-              {/* {checkbox ? (
-                <th className="px-10 py-4 border-b">Select List</th>
-              ) : (
-                <></>
-              )} */}
+          
               <th className="px-10 py-4 border-b">Hostel</th>
               <th className="px-10 py-4 border-b">Blocks</th>
               <th className="px-10 py-3 border-b">Rooms</th>
