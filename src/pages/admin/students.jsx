@@ -19,8 +19,7 @@ function Students() {
   const [visibility, setVisibility] = useState(false);
   const [userDetails, setUserDetails] = useState({});
     const [selectedMatricNo, setSelectedMatricNo] = useState(null);
-
-  let listX;
+  const [formerList, setFormerList ] =  useState([])
 
 
   useEffect(() => {
@@ -34,9 +33,9 @@ function Students() {
       .get(url, { headers })
       .then((res) => {
         if (res.data.success) {
-          listX = res.data.data;
-          console.log("listX =====>", listX);
-          setList(listX);
+          let result = res.data.data;
+          setList(result);
+          setFormerList(result)
           setShow(true);
         }
       })
@@ -115,11 +114,11 @@ function Students() {
             </div>
             <input
               onChange={(evt) => {
-                setList(listX);
-                if (evt.target.value == "") {
-                  setList(listX);
+                setList(formerList);
+                if (evt.target.value === "") {
+                  setList(formerList);
                 } else {
-                  const updatedList = studentList.filter((list) =>
+                  const updatedList = formerList.filter((list) =>
                     list.matricNo.includes(evt.target.value)
                   );
 
@@ -171,7 +170,7 @@ function Students() {
               width={"25px"}
               height={"25px"}
             />
-            <p>Loading...</p>
+      
           </>
         )}
         <div className="mx-auto  w-5/6">
