@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Shimmer from "../../components/skeleton/shimer";
 import ReactLoading from "react-loading";
+import Upload from "../../components/upload";
 
 
 
@@ -125,7 +126,11 @@ function Hostels() {
   //  }, [hostelList]);
 
   return (
-    <div className="lm-2 ">
+    <div className="lm-2">
+     
+
+      <Upload />
+  
       {/* <div className=" flex justify-between  bg-white m-2 py-5  px-4">
         <span className=" text-blue-800 text-xl ">Hostels Record</span>
         <div className="flex gap-3  -mt-1 mr-10">
@@ -154,7 +159,7 @@ function Hostels() {
       {/* <Topbar /> */}
       {/* </div> */}
 
-      <section className="bg-white lml-2 pt-4 lmr-2 rounded-lg">
+      {/* <section className="bg-white lml-2 pt-4 lmr-2 rounded-lg">
         {checkbox ? (
           <></>
         ) : (
@@ -285,7 +290,7 @@ function Hostels() {
                   ) : (
                     <></>
                   )} */}
-                  <td className=" py-3 ">{data.hostel_name}</td>
+                  {/* <td className=" py-3 ">{data.hostel_name}</td>
                   <td className=" py-3 ">{data.block}</td>
                   <td className=" py-3 ">{data.roomNo}</td>
                   <td className=" py-3 ">{data.bedNo}</td>
@@ -328,7 +333,7 @@ function Hostels() {
       setWarn(false)}} className=' bg-blue-900 text-white px-12 mt-3 py-1 rounded-sm mx-auto'>close</button>
   </div>
        </div>
-       </div> : <></>}
+       </div> : <></>} */} 
     </div>
   );
 }
