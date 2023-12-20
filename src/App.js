@@ -10,6 +10,7 @@ import Login from './pages/login';
 import { useAuth } from './auth/authProvider';
 import PageLayout from './components/pageLayout';
 import IdCard from './components/idCard';
+import SystemLog from './pages/admin/systemLog';
 
 
 
@@ -68,6 +69,15 @@ function App() {
                 element={
                   <PageLayout>
                     <IdCard />
+                  </PageLayout>
+                }
+              >
+              </Route>
+              <Route
+                path="/system_log"
+                element={
+                  <PageLayout>
+                    <SystemLog />
                   </PageLayout>
                 }
               >

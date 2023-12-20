@@ -47,6 +47,9 @@ function Topbar() {
       case "/student_records":
         setCurrentPath("Student Record");
         break;
+      case "/system_log":
+        setCurrentPath("System Log");
+        break;
       default:
         setCurrentPath("Home");
         break;
