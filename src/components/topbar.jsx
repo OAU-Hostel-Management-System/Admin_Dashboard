@@ -28,7 +28,6 @@ import { Squash as Hamburger } from "hamburger-react";
 
 function Topbar() {
   const location = useLocation().pathname;
-  console.log(location);
 
   const [currentPath, setCurrentPath] = useState("Home");
 
