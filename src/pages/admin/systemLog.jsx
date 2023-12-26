@@ -6,7 +6,7 @@ const SystemLog = () => {
   const page = 0;
 
   const [isLoading, setIsLoading] = useState(true);
-  const [systemLog, setSystemLog] = useState();
+  const [systemLog, setSystemLog] = useState([]);
 
   const [dateInterval, setDateInterval] = useState({
     endDate: "",
