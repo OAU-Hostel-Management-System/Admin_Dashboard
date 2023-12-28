@@ -1,56 +1,53 @@
-import React from 'react'
-import Logosvg from './logosvg.svg'
-import { useState } from 'react'
-import axios from 'axios'
-import { useAuth } from '../auth/authProvider'
+import React from "react";
+import Logosvg from "./logosvg.svg";
+import { useState } from "react";
+import axios from "axios";
+import { useAuth } from "../auth/authProvider";
 import ReactLoading from "react-loading";
 // import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
-  
- const [loginDetails, setLoginDetails ] = useState({ username : "", password : ""})
- const [errorMsg, setError ] = useState("")
- const { login } = useAuth();
- const [isLoading, setIsLoading] = useState(false);
-//  const navigate = useNavigate();
+  const [loginDetails, setLoginDetails] = useState({
+    username: "",
+    password: ""
+  });
+  const [errorMsg, setError] = useState("");
+  const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  //  const navigate = useNavigate();
 
- const url = "https://hmsbackend-c36l.onrender.com/auth/signin"
+  const url = "https://hmsbackend-c36l.onrender.com/auth/signin";
 
-  const sendRequest = ()=>{
+  const sendRequest = () => {
     setIsLoading(true);
-     axios
-       .post(url, loginDetails)
-       .then((res) => {
-         const authToken = res.data.token;
-         login(authToken);
-         sessionStorage.setItem("authToken", authToken);
-         if (res.status === 200 && res.success) {
-           console.log("the data", res);
-           setIsLoading(false);
-
-         }
-       })
-       .catch((error) => {
-         if (error.response) {
-
-           console.error("Response Error:", error.response.data.message);
-           console.error("Status Code:", error.response.status);
-           setError(error.response.data.message);
-           setIsLoading(false);
-         } else if (error.request) {
-           console.error("Request Error:", error.request);
-           setError(error.request);
-           setIsLoading(false);
-
-         } else {
-           console.error("General Error:", error.message);
-           setError(error.message);
-           setIsLoading(false);
-
-         }
-       });
-   
-  }
+    axios
+      .post(url, loginDetails)
+      .then(res => {
+        const authToken = res.data.token;
+        login(authToken);
+        sessionStorage.setItem("authToken", authToken);
+        if (res.status === 200 && res.success) {
+          console.log("the data", res);
+          setIsLoading(false);
+        }
+      })
+      .catch(error => {
+        if (error.response) {
+          console.error("Response Error:", error.response.data.message);
+          console.error("Status Code:", error.response.status);
+          setError(error.response.data.message);
+          setIsLoading(false);
+        } else if (error.request) {
+          console.error("Request Error:", error.request);
+          setError(error.request);
+          setIsLoading(false);
+        } else {
+          console.error("General Error:", error.message);
+          setError(error.message);
+          setIsLoading(false);
+        }
+      });
+  };
 
   return (
     // kindly implement the login page using tailwind or css if preferred
@@ -76,7 +73,10 @@ const Login = () => {
         <form className="flex flex-col items-center justify-center w-full px-[5%] md:px-0 md:w-1/2">
           <h1 className=" hidden md:block font-bold text-3xl mb-24">Login</h1>
           <input
-            onChange={(evt) => {
+            onChange={evt => {
+              if (errorMsg !== "") {
+                setError("");
+              }
               setLoginDetails({ ...loginDetails, username: evt.target.value });
             }}
             type="text"
@@ -84,7 +84,10 @@ const Login = () => {
             className="mb-8 border-2 border-slate-300 rounded-lg w-full px-4 py-2 outline-blue-200"
           />
           <input
-            onChange={(evt) => {
+            onChange={evt => {
+              if (errorMsg !== "") {
+                setError("");
+              }
               setLoginDetails({ ...loginDetails, password: evt.target.value });
             }}
             type="password"
@@ -94,8 +97,7 @@ const Login = () => {
         </form>
         <button
           onClick={sendRequest}
-          className="text-white font-bold bg-[#113885]  w-1/2 py-2 rounded-lg flex justify-center items-center"
-        >
+          className="text-white font-bold bg-[#113885]  w-1/2 py-2 rounded-lg flex justify-center items-center">
           {!isLoading ? (
             "Login"
           ) : (
@@ -108,6 +110,6 @@ const Login = () => {
       </div>
     </div>
   );
-}
+};
 
-export default Login
+export default Login;

@@ -1,35 +1,43 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useState } from "react";
+import { ClipLoader } from "react-spinners";
 
 const SystemLog = () => {
-  const page = 0;
+  const pageRef = useRef(1);
 
   const [isLoading, setIsLoading] = useState(true);
   const [systemLog, setSystemLog] = useState([]);
+  const [error, setError] = useState(true);
+  const spinnerRef = useRef();
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [isSpinnerRefShowing, setIsSpinnerRefShowing] = useState(false);
 
   const [dateInterval, setDateInterval] = useState({
     endDate: "",
     startDate: ""
   });
 
-  //   const handleChange = e => {
-  //     // setDateInterval({e.target.name })
-  //     setDateInterval({
-  //       ...dateInterval,
-  //       [e.target.name]: e.target.value
-  //     });
-  //   };
-
-  const fetchLog = async () => {
-    setIsLoading("loading");
+  const fetchLog = async (page = pageRef.current, isFetchingForFirstTime) => {
+    isFetchingForFirstTime && setIsLoading("loading");
+    setError("");
     let url;
     if (dateInterval.startDate !== "" && dateInterval.endDate !== "") {
-      url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}&startDate=${dateInterval.startDate.replace(/-/g, "/")}&endDate=${dateInterval.endDate.replace(/-/g, "/")}`;
+      url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}&startDate=${dateInterval.startDate.replace(
+        /-/g,
+        "/"
+      )}&endDate=${dateInterval.endDate.replace(/-/g, "/")}`;
     } else if (dateInterval.startDate !== "" && dateInterval.endDate === "") {
-      url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}&startDate=${dateInterval.startDate.replace(/-/g, "/")}`;
+      url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}&startDate=${dateInterval.startDate.replace(
+        /-/g,
+        "/"
+      )}`;
     } else if (dateInterval.startDate === "" && dateInterval.endDate !== "") {
-      url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}&endDate=${dateInterval.endDate.replace(/-/g, "/")}`;
+      url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}&endDate=${dateInterval.endDate.replace(
+        /-/g,
+        "/"
+      )}`;
     } else {
       url = `https://hmsbackend-c36l.onrender.com/admin/getlog?page=${page}`;
     }
@@ -42,13 +50,21 @@ const SystemLog = () => {
         }
       });
       if (response?.status === 200) {
-        console.log(response);
-        setSystemLog(response.data.data);
-        setIsLoading(false);
+        console.log(response.data.data.length);
+        if (response.data.data.length === 0) {
+          setHasMore(false);
+        } else {
+          setSystemLog(systemLog => {
+            const newData = [...systemLog, ...response.data.data];
+            return newData
+          });
+        }
+        isFetchingForFirstTime && setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
-      setIsLoading(false);
+      setError("");
+      isFetchingForFirstTime && setIsLoading(false);
     }
   };
 
@@ -70,17 +86,45 @@ const SystemLog = () => {
   };
 
   useEffect(() => {
-    fetchLog();
+    fetchLog(1, true);
   }, []);
 
   const handleFilter = e => {
     e.preventDefault();
-    
-    fetchLog();
+    fetchLog(1, true);
   };
 
+  useEffect(() => {
+    const ref = spinnerRef.current;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        console.log(entry);
+        setIsIntersecting(entry.isIntersecting);
+      },
+      { root: null, rootMargin: "0px", threshold: 1 }
+    );
+
+    if (ref) {
+      observer.observe(ref);
+    }
+
+    return () => {
+      if (ref) {
+        observer.unobserve(ref);
+      }
+    };
+  }, [isSpinnerRefShowing]); 
+
+  useEffect(() => {
+    if (isIntersecting) {
+      fetchLog(pageRef.current + 1, false);
+      pageRef.current = pageRef.current + 1;
+    }
+  }, [isIntersecting]);
+
   return (
-    <div className="min-h-screen bg-white h-full mx-auto self-center py-10 mt-2">
+    <div className="min-h-screen bg-white h-full mx-auto self-center py-10 mt-[1px]">
       <div className="w-11/12 mx-auto space-y-4 flex flex-col ">
         <div className="h-fit">
           <h1 className=" font-medium text-xl">Activity Log</h1>
@@ -88,8 +132,7 @@ const SystemLog = () => {
             Please select a date range to generate the activity log
           </p>
           <div className="mt-3 w-full flex justify-between sm:justify-end mb-3">
-            <form
-              className="w-fit flex justify-between items-end gap-3">
+            <form className="w-fit flex justify-between items-end gap-3">
               <div className="w-1/3 sm:w-[145px] flex flex-col text-left gap-1 ">
                 <label className=" text-[#949494]" htmlFor="">
                   Start
@@ -137,9 +180,10 @@ const SystemLog = () => {
 
         <div
           className={`min-h-[400px] mt-5 p-4 bg-[#f9f9f9] rounded-md border space-y-2 ${
-            !isLoading &&
-            systemLog.length === 0 &&
-            "flex justify-center items-center gap-4"
+            error ||
+            (!isLoading &&
+              systemLog.length === 0 &&
+              "flex justify-center items-center gap-4")
           }`}>
           <div>
             {/* <div>[{formatDate("2023-11-25T03:10:43.000Z")}]:</div> */}
@@ -158,7 +202,13 @@ const SystemLog = () => {
             ))
           ) : (
             <div>
-              {systemLog.length === 0 ? (
+              {error ? (
+                <div className="w-full h-full flex flex-col justify-center items-center">
+                  <p className="text-[#949494] w-full text-center">
+                    Something went wrong please try again later!
+                  </p>
+                </div>
+              ) : systemLog.length === 0 ? (
                 <div className="w-full h-full flex flex-col justify-center items-center">
                   <p className="text-[#949494] w-full text-center">
                     No data found!
@@ -175,6 +225,17 @@ const SystemLog = () => {
                     </p>
                   </div>
                 ))
+              )}
+              {hasMore && (
+                <div
+                  ref={el => {
+                    spinnerRef.current = el;
+                    setIsSpinnerRefShowing(prev => !prev);
+                  }}
+                  className="w-full text-center flex justify-center gap-2 items-center text-[#949494] my-2 font-medium">
+                  <ClipLoader size={24} color="#949494" />
+                  <p>Fetching Log... </p>
+                </div>
               )}
             </div>
           )}
