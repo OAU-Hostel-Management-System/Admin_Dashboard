@@ -1,7 +1,13 @@
-import DashboardHome from "./home/page";
+"use client";
+
+import { useRouter } from "next/navigation";
 
 const Dashboard = () => {
-  return <DashboardHome />;
+  const router = useRouter();
+
+  router.push("/dashboard/home");
+
+  return null;
 };
 
 export default Dashboard;

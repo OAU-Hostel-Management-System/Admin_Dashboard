@@ -20,7 +20,6 @@ const Login = () => {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<AuthInputs> = (data) => {
-    console.log("data ooo", data);
     router.push("/dashboard");
   };
 
