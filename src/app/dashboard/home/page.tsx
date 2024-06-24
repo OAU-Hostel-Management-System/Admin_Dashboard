@@ -1,10 +1,15 @@
-import { HallOfResidenceDetails, HostelSelectDropdown } from "@/components";
+import {
+  AdminDashboardOverviewTable,
+  HallOfResidenceDetails,
+  HostelSelectDropdown,
+} from "@/components";
 
 const DashboardHome = () => {
   return (
     <div className="flex flex-col gap-4">
       <HostelSelectDropdown />
       <HallOfResidenceDetails />
+      <AdminDashboardOverviewTable />
     </div>
   );
 };

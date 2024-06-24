@@ -19,9 +19,7 @@ export const Sidebar = () => {
                   : "text-[#718096]"
               }`}
               onClick={() => {
-                sidebarItem.route === "/login" &&
-                  console.log("You are logging out");
-                alert("You are logging out");
+                sidebarItem.route === "/login" && alert("You are logging out");
               }}
             >
               {pathname.startsWith(sidebarItem.route)
