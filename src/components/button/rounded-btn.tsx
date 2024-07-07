@@ -3,7 +3,7 @@ import { FC } from "react";
 
 interface RoundedBtnProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  text: string;
+  text: string | React.ReactNode;
 }
 
 export const RoundedBtn: FC<RoundedBtnProps> = ({

@@ -1,13 +1,10 @@
-"use client";
+import { LoginReRoutes, PageLoader } from "@/components";
 
-import { useRouter } from "next/navigation";
-
-const Dashboard = () => {
-  const router = useRouter();
-
-  router.push("/dashboard/home");
-
-  return null;
+const DashboardReRouter = () => {
+  return (
+    <LoginReRoutes>
+      <PageLoader />
+    </LoginReRoutes>
+  );
 };
-
-export default Dashboard;
+export default DashboardReRouter;

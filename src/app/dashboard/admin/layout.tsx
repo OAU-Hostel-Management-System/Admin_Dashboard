@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Navbar, Sidebar } from "@/components";
+import { Navbar, ProtectedRoutesAdmin, Sidebar } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +18,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main>
+    <ProtectedRoutesAdmin>
       <Navbar />
       <div className="flex h-[calc(100vh-100px)] overflow-hidden border-t-2 border-[#CBD5E0]">
         <div className="min-h-full w-[280px] overflow-y-scroll px-5 pb-4 pt-8">
@@ -28,6 +28,6 @@ export default function DashboardLayout({
           {children}
         </div>
       </div>
-    </main>
+    </ProtectedRoutesAdmin>
   );
 }
