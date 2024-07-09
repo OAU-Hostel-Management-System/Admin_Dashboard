@@ -45,16 +45,22 @@ export const LoginForm = () => {
 
     try {
       const res = await mutation.mutateAsync(UserData);
+      console.log(res);
 
       if (res.data.success === true) {
+        console.log("here")
         const token = res?.data?.d?.token;
         const encryptedToken = encryptToken(token);
         const user_type = res?.data?.d?.user_type;
 
-        localStorage.setItem("token", encryptedToken);
-        localStorage.setItem("user_type", user_type);
+        // localStorage.setItem("token", encryptedToken);
+        // localStorage.setItem("user_type", user_type);
         toast.success("Login Successful");
-        router.push("/dashboard");
+        if (user_type === "student") {
+          router.push("/dashboard/student");
+        } else {
+          router.push("/dashboard/admin");
+        }
       } else {
         if (res.data.msg) {
           toast.error(res.data.msg);

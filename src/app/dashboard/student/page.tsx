@@ -1,4 +1,12 @@
+import { BedSpaceInfoContainer } from "@/components/students/bedspaceInfocontainer";
+import { PersonalInfoContainer } from "@/components/students/personalinfocontainer";
+
 const StudentDashboard = () => {
-  return <div>StudentDashboard</div>;
+  return (
+    <div className="space-y-5 md:space-y-7">
+      <PersonalInfoContainer />
+      <BedSpaceInfoContainer />
+    </div>
+  );
 };
 export default StudentDashboard;
