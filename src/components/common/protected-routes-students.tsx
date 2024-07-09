@@ -13,7 +13,7 @@ export const ProtectedRoutesStudents: FC<PropsWithChildren> = ({
 
   useEffect(() => {
     const user = localStorage.getItem("user_type");
-    if (user === "student") {
+    if (user !== null && user === "student") {
       setAllowUser(true);
     } else {
       toast.error("You are not authorized to view this page");

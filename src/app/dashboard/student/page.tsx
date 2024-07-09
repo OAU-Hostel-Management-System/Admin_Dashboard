@@ -1,12 +1,10 @@
-import { BedSpaceInfoContainer } from "@/components/students/bedspaceInfocontainer";
-import { PersonalInfoContainer } from "@/components/students/personalinfocontainer";
+import { AlwaysPushToWrapper, PageLoader } from "@/components";
 
 const StudentDashboard = () => {
   return (
-    <div className="space-y-5 md:space-y-7">
-      <PersonalInfoContainer />
-      <BedSpaceInfoContainer />
-    </div>
+    <AlwaysPushToWrapper where="/dashboard/student/home">
+      <PageLoader />
+    </AlwaysPushToWrapper>
   );
 };
 export default StudentDashboard;

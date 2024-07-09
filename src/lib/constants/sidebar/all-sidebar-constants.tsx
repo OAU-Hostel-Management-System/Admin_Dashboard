@@ -59,3 +59,48 @@ export const AdminSideBarLinks = [
     route: "/login",
   },
 ];
+
+export const StudentSideBarLinks = [
+  {
+    unselectedIcon: <IoHomeOutline />,
+    selectedIcon: <IoHome />,
+    label: "Home",
+    route: "/dashboard/student/home",
+  },
+  {
+    unselectedIcon: <IoBedOutline />,
+    selectedIcon: <IoBed />,
+    label: "Bedspace Allocation",
+    route: "/dashboard/student/bedspace-allocation",
+  },
+  {
+    unselectedIcon: <CiFileOn />,
+    selectedIcon: <FaFile />,
+    label: "Hall Records",
+    route: "/dashboard/student/hall-records",
+  },
+  {
+    unselectedIcon: <IoPersonOutline />,
+    selectedIcon: <IoPerson />,
+    label: "Student Records",
+    route: "/dashboard/student/student-records",
+  },
+  {
+    unselectedIcon: <IoPeopleOutline />,
+    selectedIcon: <IoPeople />,
+    label: "Admins",
+    route: "/dashboard/student/admins",
+  },
+  {
+    unselectedIcon: <BsActivity />,
+    selectedIcon: <FiActivity />,
+    label: "Activity",
+    route: "/dashboard/student/activity",
+  },
+  {
+    unselectedIcon: <IoLogOutOutline />,
+    selectedIcon: <IoLogOut />,
+    label: "Logout",
+    route: "/login",
+  },
+];

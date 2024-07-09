@@ -1,15 +1,24 @@
 "use client";
 
-import { AdminSideBarLinks } from "@/lib";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export const Sidebar = () => {
+export const Sidebar = ({
+  sidebarItems,
+}: {
+  sidebarItems: {
+    unselectedIcon: JSX.Element;
+    selectedIcon: JSX.Element;
+    label: string;
+    route: string;
+  }[];
+}) => {
   const pathname = usePathname();
+
   return (
     <div className="flex min-h-full flex-col justify-between">
       <ul className="space-y-10">
-        {AdminSideBarLinks.map((sidebarItem) => (
+        {sidebarItems.map((sidebarItem) => (
           <li key={sidebarItem.label} className="flex items-center gap-4">
             <Link
               href={sidebarItem.route}
@@ -19,7 +28,8 @@ export const Sidebar = () => {
                   : "text-[#718096]"
               }`}
               onClick={() => {
-                sidebarItem.route === "/login" && alert("You are logging out");
+                sidebarItem.route === "/login" &&
+                  localStorage.removeItem("user_type");
               }}
             >
               {pathname.startsWith(sidebarItem.route)
