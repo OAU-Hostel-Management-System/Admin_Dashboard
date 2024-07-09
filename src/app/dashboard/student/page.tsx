@@ -1,4 +1,10 @@
+import { AlwaysPushToWrapper, PageLoader } from "@/components";
+
 const StudentDashboard = () => {
-  return <div>StudentDashboard</div>;
+  return (
+    <AlwaysPushToWrapper where="/dashboard/student/home">
+      <PageLoader />
+    </AlwaysPushToWrapper>
+  );
 };
 export default StudentDashboard;
