@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation";
 import { FC, PropsWithChildren, useEffect } from "react";
 
 export const LoginReRoutes: FC<PropsWithChildren> = ({ children }) => {
-  const user = localStorage.getItem("user_type");
-
   const router = useRouter();
 
   useEffect(() => {
+    const user = localStorage.getItem("user_type");
     if (user === "student") {
       router.push("/dashboard/student");
     }
