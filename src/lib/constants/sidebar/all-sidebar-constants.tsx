@@ -2,9 +2,12 @@ import { BsActivity } from "react-icons/bs";
 import { CiFileOn } from "react-icons/ci";
 import { FaFile } from "react-icons/fa6";
 import { FiActivity } from "react-icons/fi";
+import { IoMdCard } from "react-icons/io";
 import {
   IoBed,
   IoBedOutline,
+  IoDocument,
+  IoDocumentOutline,
   IoHome,
   IoHomeOutline,
   IoLogOut,
@@ -74,29 +77,23 @@ export const StudentSideBarLinks = [
     route: "/dashboard/student/bedspace-allocation",
   },
   {
-    unselectedIcon: <CiFileOn />,
-    selectedIcon: <FaFile />,
-    label: "Hall Records",
-    route: "/dashboard/student/hall-records",
+    unselectedIcon: <IoDocumentOutline />,
+    selectedIcon: <IoDocument />,
+    label: "Bedspace Report",
+    route: "/dashboard/student/bedspace-reports",
   },
   {
-    unselectedIcon: <IoPersonOutline />,
-    selectedIcon: <IoPerson />,
-    label: "Student Records",
-    route: "/dashboard/student/student-records",
+    unselectedIcon: <IoMdCard className="bg-[#718096]" />,
+    selectedIcon: <IoMdCard  />,
+    label: "Payment",
+    route: "/dashboard/student/payment",
   },
-  {
-    unselectedIcon: <IoPeopleOutline />,
-    selectedIcon: <IoPeople />,
-    label: "Admins",
-    route: "/dashboard/student/admins",
-  },
-  {
-    unselectedIcon: <BsActivity />,
-    selectedIcon: <FiActivity />,
-    label: "Activity",
-    route: "/dashboard/student/activity",
-  },
+  // {
+  //   unselectedIcon: <BsActivity />,
+  //   selectedIcon: <FiActivity />,
+  //   label: "Activity",
+  //   route: "/dashboard/student/activity",
+  // },
   {
     unselectedIcon: <IoLogOutOutline />,
     selectedIcon: <IoLogOut />,
