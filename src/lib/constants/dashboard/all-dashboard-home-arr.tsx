@@ -54,6 +54,9 @@ export const hostelNames = [
   "Amina Hall",
 ];
 
+const blockNames = ["A", "B", "C", "D", "E"];
+
+export const formattedBlocks = formatHostels(blockNames);
 export const formattedHostels = formatHostels(hostelNames);
 
 export const SelectHostelInputsArr = [

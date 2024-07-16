@@ -31,8 +31,10 @@ export const Sidebar = ({
                     : "text-[#718096]"
                 }`}
                 onClick={() => {
-                  sidebarItem.route === "/login" &&
+                  if (sidebarItem.route === "/login") {
                     localStorage.removeItem("user_type");
+                    localStorage.removeItem("token");
+                  }
                 }}
               >
                 {pathname.startsWith(sidebarItem.route)

@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { encryptToken } from "@/utils";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 export const LoginForm = () => {
   const {
@@ -54,10 +55,14 @@ export const LoginForm = () => {
         localStorage.setItem("token", encryptedToken);
         localStorage.setItem("user_type", user_type);
         toast.success("Login Successful");
-        router.push("/dashboard");
+        // router.push("/dashboard");
+        console.log("success", res);
       } else {
         if (res.data.msg) {
           toast.error(res.data.msg);
+          console.log("hello 22", res);
+          // const sessionCookie = Cookies.get("connect.sid");
+          // console.log("Session ID22222222:", sessionCookie);
         }
       }
 
