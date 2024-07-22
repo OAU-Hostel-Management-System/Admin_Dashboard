@@ -1,16 +1,57 @@
+"use client";
+
 import {
   BlockSelectDropdown,
   HostelSelectDropdown,
+  PageLoader,
   StudentRecordsTable,
 } from "@/components";
+import { useGetFilters } from "@/hooks";
+import { decryptToken } from "@/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { toast } from "react-toastify";
 
 const DashboardStudentRecord = () => {
+  const queryClient = useQueryClient();
+
+  const [selectedHostel, setSelectedHostel] = useState<
+    { value: string; label: string } | undefined
+  >({
+    value: "AWO",
+    label: "Awolowo",
+  });
+
+  const token = localStorage.getItem("token");
+  const decryptedToken = decryptToken(token!);
+
+  const { filterIsLoading, filterIsError, filterData, filterError } =
+    useGetFilters(decryptedToken);
+
+  const handleHostelChange = (
+    selectedOption: { value: string; label: string } | null,
+  ) => {
+    setSelectedHostel(selectedOption || undefined);
+    console.log("Selected Hostel:", selectedOption);
+    queryClient.invalidateQueries({ queryKey: ["hostelData"] });
+  };
+
+  if (filterIsLoading) return <PageLoader />;
+
+  if (filterIsError) {
+    toast.error(filterError?.message);
+  }
+
   return (
     <div>
       <div className="space-y-2">
         <h2 className="text-xl font-bold">Hostel</h2>
-        <HostelSelectDropdown />
+        <HostelSelectDropdown
+          hostelData={filterData!}
+          onChange={handleHostelChange}
+          defaultValue={selectedHostel}
+        />
       </div>
       <div className="my-6 flex items-center justify-between">
         <div className="w-[45%] space-y-2">
@@ -28,9 +69,7 @@ const DashboardStudentRecord = () => {
         <Searchbar />
       </div>
 
-      <div className="my-12">
-        <StudentRecordsTable />
-      </div>
+      <div className="my-12">{/* <StudentRecordsTable /> */}</div>
     </div>
   );
 };

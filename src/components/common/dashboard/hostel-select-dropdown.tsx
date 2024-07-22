@@ -1,40 +1,43 @@
 "use client";
 
 import { DashboardSelectCustomStyles, formattedHostels } from "@/lib";
-import { DashboardInputs } from "@/types";
 import { formatHostels } from "@/utils";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import Select from "react-select";
+import { FC, useMemo } from "react";
+import Select, { SingleValue } from "react-select";
 
-export const HostelSelectDropdown = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<DashboardInputs>();
+interface HostelData {
+  hostel_name: string;
+  blocks: any[];
+  rooms: any[];
+  hostel_abbrv: string;
+}
 
-  const onSubmit: SubmitHandler<DashboardInputs> = (data) => {
-    console.log("Selected data:", data);
-  };
+interface HostelSelectDropdownProps {
+  hostelData: HostelData[];
+  onChange: (selectedOption: { value: string; label: string } | null) => void;
+  value?: { value: string; label: string };
+}
+
+export const HostelSelectDropdown: FC<HostelSelectDropdownProps> = ({
+  hostelData,
+  onChange,
+  value,
+}) => {
+  const formattedHostels = useMemo(
+    () => formatHostels(hostelData),
+    [hostelData],
+  );
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Controller
-          control={control}
-          name="hostelNames"
-          rules={{ required: "This field is required" }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={formattedHostels}
-              placeholder="Select a hostel"
-              styles={DashboardSelectCustomStyles}
-            />
-          )}
-        />
-        {errors.hostelNames && <p>{errors.hostelNames.message}</p>}
-      </div>
-    </form>
+    <Select
+      options={formattedHostels}
+      placeholder="Select a hostel"
+      styles={DashboardSelectCustomStyles}
+      // onChange={onChange}
+      onChange={(newValue: SingleValue<{ value: string; label: string }>) =>
+        onChange(newValue)
+      }
+      value={value}
+    />
   );
 };

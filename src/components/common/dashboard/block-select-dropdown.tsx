@@ -1,39 +1,32 @@
 "use client";
 
-import { DashboardSelectCustomStyles, formattedBlocks } from "@/lib";
-import { BlockSelectInputs } from "@/types";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import Select from "react-select";
+import { DashboardSelectCustomStyles } from "@/lib";
+import { FC } from "react";
+import Select, { SingleValue } from "react-select";
 
-export const BlockSelectDropdown = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<BlockSelectInputs>();
+interface BlockData {
+  value: string;
+  label: string;
+}
 
-  const onSubmit: SubmitHandler<BlockSelectInputs> = (data) => {
-    console.log("Selected data:", data);
-  };
+interface BlockSelectDropdownProps {
+  blockData: BlockData[];
+  onChange: (selectedOption: BlockData | null) => void;
+  value?: BlockData;
+}
 
+export const BlockSelectDropdown: FC<BlockSelectDropdownProps> = ({
+  blockData,
+  onChange,
+  value,
+}) => {
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <Controller
-          control={control}
-          name="blockNames"
-          rules={{ required: "This field is required" }}
-          render={({ field }) => (
-            <Select
-              {...field}
-              options={formattedBlocks}
-              placeholder="Select a block"
-              styles={DashboardSelectCustomStyles}
-            />
-          )}
-        />
-        {errors.blockNames && <p>{errors.blockNames.message}</p>}
-      </div>
-    </form>
+    <Select
+      options={blockData}
+      placeholder="Select a block"
+      styles={DashboardSelectCustomStyles}
+      onChange={(newValue: SingleValue<BlockData>) => onChange(newValue)}
+      value={value}
+    />
   );
 };

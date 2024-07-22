@@ -4,65 +4,59 @@ import {
   AdminDashboardOverviewTable,
   HallOfResidenceDetails,
   HostelSelectDropdown,
+  PageLoader,
 } from "@/components";
-import axios from "axios";
-import { useEffect } from "react";
-//@ts-ignore
-import Cookies from "js-cookie";
-//@ts-ignore
-import cookie from "cookie";
+import { useFetchHostelData, useGetFilters } from "@/hooks";
+import { decryptToken } from "@/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 const DashboardHome = () => {
-  useEffect(() => {
-    // Function to get the value of a specific cookie
-    const getCookieValue = (name: string) => {
-      const nameEQ = name + "=";
-      const ca = document.cookie.split(";");
-      for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === " ") c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) === 0)
-          return c.substring(nameEQ.length, c.length);
-      }
-      return null;
-    };
+  const queryClient = useQueryClient();
+  const [selectedHostel, setSelectedHostel] = useState<
+    { value: string; label: string } | undefined
+  >({
+    value: "AWO",
+    label: "Awolowo",
+  });
+  const token = localStorage.getItem("token");
+  const decryptedToken = decryptToken(token!);
 
-    // Get the value of 'connect.sid' cookie
-    const sessionCookie = getCookieValue("connect.sid");
-    console.log("Session ID222222222:", sessionCookie);
-    // const sessionCookie = Cookies.get("connect.sid");
-    console.log("Session ID:", sessionCookie);
+  const { filterIsLoading, filterIsError, filterData, filterError } =
+    useGetFilters(decryptedToken);
 
-    const cookies = cookie.serialize("connect.sid", sessionCookie, {
-      httpOnly: true,
-      // secure: true,
-      sameSite: "None", // Allows cross-site cookies
-    });
+  const { hostelIsLoading, hostelIsError, hostelData, hostelError } =
+    useFetchHostelData(selectedHostel?.value!, decryptedToken);
 
-    try {
-      const res = axios.get(
-        `${process.env.NEXT_PUBLIC_BASEURL}/admin/dashboard?hall=AWO`,
-        {
-          withCredentials: true,
-          headers: {
-            Cookie: cookies,
-          },
-        },
-      );
+  const handleHostelChange = (
+    selectedOption: { value: string; label: string } | null,
+  ) => {
+    setSelectedHostel(selectedOption || undefined);
+    console.log("Selected Hostel:", selectedOption);
+    queryClient.invalidateQueries({ queryKey: ["hostelData"] });
+  };
 
-      res.then((data) => {
-        console.log(data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  if (filterIsLoading || hostelIsLoading) return <PageLoader />;
+
+  if (filterIsError || hostelIsError) {
+    toast.error(filterError?.message || hostelError?.message);
+  }
 
   return (
     <div className="flex flex-col gap-4">
-      <HostelSelectDropdown />
-      <HallOfResidenceDetails />
-      <AdminDashboardOverviewTable />
+      <HostelSelectDropdown
+        hostelData={filterData!}
+        onChange={handleHostelChange}
+        value={selectedHostel}
+      />
+      <HallOfResidenceDetails
+        blocks={hostelData?.resDetails.blocks!}
+        capacity={hostelData?.resDetails.capacity!}
+        sex={hostelData?.resDetails.sex!}
+        warden={hostelData?.resDetails.warden!}
+      />
+      <AdminDashboardOverviewTable hostelData={hostelData?.hostelSum!} />
     </div>
   );
 };

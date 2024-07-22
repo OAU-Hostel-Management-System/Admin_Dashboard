@@ -1,5 +1,5 @@
 import { DashboardInputsValues } from "@/types";
-import { formatHostels } from "@/utils";
+import { formatHostels, formatHostelsDemo } from "@/utils";
 import { TableColumn } from "react-data-table-component";
 
 export const DashboardSelectCustomStyles = {
@@ -56,8 +56,8 @@ export const hostelNames = [
 
 const blockNames = ["A", "B", "C", "D", "E"];
 
-export const formattedBlocks = formatHostels(blockNames);
-export const formattedHostels = formatHostels(hostelNames);
+export const formattedBlocks = formatHostelsDemo(blockNames);
+export const formattedHostels = formatHostelsDemo(hostelNames);
 
 export const SelectHostelInputsArr = [
   {
@@ -69,12 +69,18 @@ export const SelectHostelInputsArr = [
   },
 ];
 
+// export interface OverviewDataRow {
+//   block: string;
+//   capacity: string;
+//   allowedBed: string;
+//   unallowedBed: string;
+//   id: number;
+// }
 export interface OverviewDataRow {
   block: string;
-  capacity: string;
-  allowedBed: string;
-  unallowedBed: string;
-  id: number;
+  capacity: number;
+  allowedBed: number;
+  unallowedBed: number;
 }
 
 export const tableColumns: TableColumn<OverviewDataRow>[] = [
@@ -99,6 +105,70 @@ export const tableColumns: TableColumn<OverviewDataRow>[] = [
   //   button: true,
   //   width: "56px",
   // },
+];
+
+export interface StudentRecordsDataRow {
+  matric: string;
+  name: string;
+  gender: string;
+  bedspace: string;
+  payment_status: string;
+}
+
+export const studentRecordsTableColumns: TableColumn<StudentRecordsDataRow>[] =
+  [
+    {
+      name: "Matric No",
+      selector: (row) => row.matric,
+    },
+    {
+      name: "Name",
+      selector: (row) => row.name,
+    },
+    {
+      name: "Gender",
+      selector: (row) => row.gender,
+    },
+    {
+      name: "BedSpace",
+      selector: (row) => row.bedspace,
+    },
+    {
+      name: "Payment Status",
+      selector: (row) => row.payment_status,
+    },
+  ];
+
+export interface HallRecordsDataRow {
+  roomNo: string;
+  bedNo: string;
+  status: string;
+  matric_no: string;
+  condition: string;
+  id: number;
+}
+
+export const hallRecordsTableColumns: TableColumn<HallRecordsDataRow>[] = [
+  {
+    name: "Room",
+    selector: (row) => row.roomNo,
+  },
+  {
+    name: "Bed",
+    selector: (row) => row.bedNo,
+  },
+  {
+    name: "Status",
+    selector: (row) => row.status,
+  },
+  {
+    name: "Occupant",
+    selector: (row) => row.matric_no,
+  },
+  {
+    name: "Condition",
+    selector: (row) => row.condition,
+  },
 ];
 
 export const tableCustomStyles = {

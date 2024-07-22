@@ -1,27 +1,50 @@
 "use client";
 
 import {
-  // OverviewDataRow,
-  tableColumns,
+  StudentRecordsDataRow,
+  studentRecordsTableColumns,
   tableCustomStyles,
-  TempTableData,
 } from "@/lib";
 import DataTable, { ExpanderComponentProps } from "react-data-table-component";
 import { useIsClient } from "@/hooks";
-// import { FC } from "react";
-// import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { FC } from "react";
 
-export const StudentRecordsTable = () => {
+type StudentData = {
+  matric: string;
+  name: string;
+  gender: string;
+  bedspace: string;
+  payment_status: string;
+};
+
+const transformData = (data: StudentData[]): StudentRecordsDataRow[] => {
+  return data.map((student) => ({
+    matric: student.matric,
+    name: student.name,
+    gender: student.gender,
+    bedspace: student.bedspace,
+    payment_status: student.payment_status,
+  }));
+};
+
+interface AdminDashboardOverviewTableProps {
+  studentData: StudentData[];
+}
+
+export const StudentRecordsTable: FC<AdminDashboardOverviewTableProps> = ({
+  studentData,
+}) => {
   const isClient = useIsClient();
   const router = useRouter();
+  const formattedData = transformData(studentData);
 
   return (
     <div className="rounded-2xl border-[1.5px] border-[#CBD5E0] p-3">
       {isClient && (
         <DataTable
-          columns={tableColumns}
-          data={TempTableData}
+          columns={studentRecordsTableColumns}
+          data={formattedData}
           fixedHeader
           fixedHeaderScrollHeight="500px"
           pagination
@@ -30,24 +53,12 @@ export const StudentRecordsTable = () => {
           pointerOnHover
           responsive
           subHeaderWrap
-          // expandOnRowClicked
-          // expandableRows
-          // expandableRowsHideExpander
-          // expandableRowsComponent={ExpandedComponent}
-          onRowClicked={(row) => {
-            console.log(row);
-            router.push(`student-records/${row.id}`);
-          }}
-          // selectableRows
-          // onSelectedRowsChange={handleChange}
+          // onRowClicked={(row) => {
+          //   console.log(row);
+          //   router.push(`student-records/${row.id}`);
+          // }}
         />
       )}
     </div>
   );
 };
-
-// const ExpandedComponent: FC<ExpanderComponentProps<OverviewDataRow>> = ({
-//   data,
-// }) => {
-//   return <Link href={`student-records/3`}></Link>;
-// };
