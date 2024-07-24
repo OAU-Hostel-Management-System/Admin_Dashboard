@@ -67,9 +67,13 @@ export const HallRecordsTable: FC<AdminDashboardOverviewTableProps> = ({
           responsive
           subHeaderWrap
           onRowClicked={(row) => {
-            const idOrMatric = row.matric_no || row.id;
-            const type = row.matric_no ? "matric_no" : "id";
-            router.push(`hall-records/${idOrMatric}?type=${type}`);
+            const id = row.id;
+            const matric_no = row.matric_no;
+            // const type = row.matric_no ? "matric_no" : "id";
+
+            router.push(
+              `hall-records/${id}${matric_no ? `?matric_no=${matric_no}` : ""}`,
+            );
           }}
         />
       )}

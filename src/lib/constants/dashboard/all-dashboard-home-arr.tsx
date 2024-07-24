@@ -108,18 +108,19 @@ export const tableColumns: TableColumn<OverviewDataRow>[] = [
 ];
 
 export interface StudentRecordsDataRow {
-  matric: string;
+  matric_no: string;
   name: string;
   gender: string;
   bedspace: string;
   payment_status: string;
+  // id: number;
 }
 
 export const studentRecordsTableColumns: TableColumn<StudentRecordsDataRow>[] =
   [
     {
       name: "Matric No",
-      selector: (row) => row.matric,
+      selector: (row) => row.matric_no,
     },
     {
       name: "Name",

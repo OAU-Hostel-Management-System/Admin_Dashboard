@@ -1,11 +1,11 @@
 "use client";
 
-import { PageLoader, RoundedBtn } from "@/components";
+import { EditHallRecordsModal, PageLoader, RoundedBtn } from "@/components";
 import { useFetchStudentDetails } from "@/hooks";
 import { decryptToken } from "@/utils";
 import Image from "next/image";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 interface BedSpaceData {
@@ -40,20 +40,30 @@ const AdminStudentDetails = () => {
   // const [matricOrRoomId] = params.matricOrRoomId;
 
   const router = useRouter();
+  const [openModal, setOpenModal] = useState(false);
 
   const token = localStorage.getItem("token");
   const decryptedToken = decryptToken(token!);
 
   const params = useParams();
-  const matricOrRoomId = params.matricOrRoomId;
-  const searchParams = useSearchParams();
-  const type = searchParams.get("type");
+  // const matricOrRoomId = params.matricOrRoomId;
 
-  console.log("params", matricOrRoomId[0]);
-  console.log("searchparams", type);
+  const id = params.matricOrRoomId;
+  // const matric_no = params.matric_no;
+  const searchParams = useSearchParams();
+  const matric_no = searchParams.get("matric_no");
+  // const type = searchParams.get("type");
+  const type = matric_no ? "matric_no" : "id";
+
+  console.log("params id", id[0]);
+  console.log("searchparams", type, "---martic", matric_no);
 
   const { studentData, studentError, studentIsError, studentIsLoading } =
-    useFetchStudentDetails(decryptedToken, matricOrRoomId[0], type!);
+    useFetchStudentDetails(
+      decryptedToken,
+      type === "matric_no" ? matric_no! : id[0],
+      type,
+    );
 
   const residentBedSpaceDetailsArr = useMemo(
     () => transformRoomData(studentData?.room),
@@ -75,6 +85,7 @@ const AdminStudentDetails = () => {
           <div className="flex items-center gap-6">
             <RoundedBtn
               text="Edit"
+              onClick={() => setOpenModal(true)}
               className="w-fit rounded-md border-[1.5px] border-solid border-[#3182CE] bg-white px-4 text-[#3182CE]"
             />
             <RoundedBtn
@@ -95,6 +106,15 @@ const AdminStudentDetails = () => {
             ))}
         </div>
       </div>
+
+      <EditHallRecordsModal
+        isOpen={openModal}
+        setIsOpen={setOpenModal}
+        hallRecordData={residentBedSpaceDetailsArr}
+        matricNo={matric_no}
+        roomId={id[0]}
+        type={type!}
+      />
 
       {/* <div className="mt-6 rounded-2xl border-[1.5px] border-[#CBD5E0] bg-white p-7">
         <div className="flex items-center justify-between">

@@ -11,7 +11,15 @@ interface StudentData{
    status: string;
  }
 
- student: {}
+ student: {
+   dept: string;
+  faculty: string;
+  fullName: string;
+  img_url: string;
+  matric_no: string;
+  paid: boolean;
+  part: string;
+ }
 }
 
 

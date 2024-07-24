@@ -3,3 +3,10 @@
 @tailwind utilities;
 
 
+.background-text {
+  background-image: url('/images/akintola-bg.svg');
+  background-repeat: repeat;
+  background-size: contain;
+  /* opacity: 0.1; */
+}
+
