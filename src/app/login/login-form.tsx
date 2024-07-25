@@ -80,7 +80,7 @@ export const LoginForm = () => {
   >([]);
 
   useEffect(() => {
-    if (sessionData) {
+    if (sessionData && Array.isArray(sessionData)) {
       setFormattedSessions(formatSessions(sessionData));
     }
   }, [sessionData]);
