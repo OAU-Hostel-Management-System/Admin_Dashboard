@@ -1,9 +1,9 @@
 "use client";
 
-import { AuthInput, RoundedBtn } from "@/components";
-import { useIsClient } from "@/hooks";
-import { AuthSelectCustomStyles, SelectInputsArr, TextInputsArr } from "@/lib";
-import { AuthInputs } from "@/types";
+import { AuthInput, PageLoader, RoundedBtn } from "@/components";
+import { useFetchSessions, useIsClient } from "@/hooks";
+import { AuthSelectCustomStyles, TextInputsArr } from "@/lib";
+import { AuthInputs, AuthInputsValues } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -13,6 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import { encryptToken } from "@/utils";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { useEffect, useMemo, useState } from "react";
 
 export const LoginForm = () => {
   const {
@@ -70,6 +71,38 @@ export const LoginForm = () => {
   };
 
   const isClient = useIsClient();
+
+  const { sessionData, sessionError, sessionIsError, sessionIsLoading } =
+    useFetchSessions();
+
+  const [formattedSessions, setFormattedSessions] = useState<
+    { value: string; label: string }[]
+  >([]);
+
+  useEffect(() => {
+    if (sessionData) {
+      setFormattedSessions(formatSessions(sessionData));
+    }
+  }, [sessionData]);
+
+  const SelectInputsArr = useMemo(
+    () => [
+      {
+        name: "session" as AuthInputsValues,
+        options: formattedSessions,
+        rules: { required: true },
+        error: "Session is required",
+        placeholder: "Session",
+      },
+    ],
+    [formattedSessions, sessionData],
+  );
+
+  if (sessionIsLoading) return <PageLoader />;
+  if (sessionIsError) {
+    toast.error(sessionError?.message || "Failed to get sessions");
+    return null;
+  }
 
   return (
     <form
@@ -129,4 +162,11 @@ export const LoginForm = () => {
       />
     </form>
   );
+};
+
+const formatSessions = (sessions: { session: string }[]) => {
+  return sessions.map((session) => ({
+    value: session.session,
+    label: session.session,
+  }));
 };

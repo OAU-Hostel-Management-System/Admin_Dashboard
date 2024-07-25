@@ -115,35 +115,6 @@ const AdminStudentDetails = () => {
         roomId={id[0]}
         type={type!}
       />
-
-      {/* <div className="mt-6 rounded-2xl border-[1.5px] border-[#CBD5E0] bg-white p-7">
-        <div className="flex items-center justify-between">
-          <h1 className="text-xl font-bold text-[#1A202C]">Occupant</h1>
-          <RoundedBtn
-            text="View ID card"
-            className="w-fit rounded-md border-[1.5px] border-solid border-[#3182CE] bg-white px-4 text-[#3182CE]"
-          />
-        </div>
-        <div className="mt-5 flex gap-[80px] rounded-2xl bg-white">
-          <Image
-            src={"/images/default-avatar-profile.jpg"}
-            alt="img"
-            width={128}
-            height={128}
-            className="h-[128px] w-[128px] rounded-full"
-          />
-
-          <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-5">
-            {residentBedSpaceDetailsArr.map((item) => (
-              <ResidentDetails
-                key={item.title}
-                title={item.title}
-                details={item.details}
-              />
-            ))}
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };

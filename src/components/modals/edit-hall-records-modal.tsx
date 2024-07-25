@@ -26,6 +26,7 @@ const statusOptions = [
   { value: "Available", label: "Available" },
   { value: "Unavailable", label: "Unavailable" },
   { value: "Reserved", label: "Reserved" },
+  { value: "Occupied", label: "Occupied" },
 ];
 
 const conditionOptions = [

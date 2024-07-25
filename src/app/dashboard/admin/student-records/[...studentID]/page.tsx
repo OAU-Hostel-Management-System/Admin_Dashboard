@@ -1,6 +1,11 @@
 "use client";
 
-import { IDtemplate, PageLoader, RoundedBtn } from "@/components";
+import {
+  IDtemplate,
+  PageLoader,
+  RevokeBedspaceModal,
+  RoundedBtn,
+} from "@/components";
 import { useFetchStudentDetails } from "@/hooks";
 import { decryptToken } from "@/utils";
 import Image from "next/image";
@@ -17,6 +22,16 @@ interface BedSpaceData {
   status: string;
 }
 
+interface Student {
+  fullName: string;
+  dept: string;
+  faculty: string;
+  img_url: string;
+  matric_no: string;
+  paid: boolean;
+  part: string;
+}
+
 const transformRoomData = (data?: BedSpaceData) => {
   if (!data) {
     return [];
@@ -31,8 +46,62 @@ const transformRoomData = (data?: BedSpaceData) => {
   ];
 };
 
+const transformStudentData = (data?: Student) => {
+  if (!data) {
+    return [];
+  }
+  return [
+    { title: "Name", details: data.fullName || "N/A" },
+    { title: "Matric No", details: data.matric_no || "N/A" },
+    { title: "Dept", details: data.dept || "N/A" },
+    { title: "Level", details: data.part || "N/A" },
+    { title: "Faculty", details: data.faculty || "N/A" },
+    {
+      title: "Payment Status",
+      details: (data.paid === true ? "Successful" : "Unsuccessful") || "N/A",
+    },
+  ];
+};
+
+const transformIdData = (studentData?: Student, roomData?: BedSpaceData) => {
+  if (!studentData || !roomData) {
+    return [];
+  }
+  return [
+    {
+      title: "Name",
+      details: studentData.fullName || "N/A",
+    },
+    {
+      title: "Matric No",
+      details: studentData.matric_no || "N/A",
+    },
+    {
+      title: "Department",
+      details: studentData.dept || "N/A",
+    },
+    {
+      title: "Block",
+      details: roomData.block || "N/A",
+      subDetails: [
+        { title: "Room No", details: roomData.roomNo || "N/A" },
+        { title: "Bed No", details: roomData.bedNo || "N/A" },
+      ],
+    },
+    {
+      title: "Date",
+      details: "31/11/2024",
+    },
+    {
+      title: "Valid only for",
+      details: "2024/2025 session",
+    },
+  ];
+};
+
 const AdminStudentRecord = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [openRevokeModal, setOpenRevokeModal] = useState(false);
 
   const router = useRouter();
   const token = localStorage.getItem("token");
@@ -52,6 +121,16 @@ const AdminStudentRecord = () => {
     [studentData],
   );
 
+  const residentStudentDetailsArr = useMemo(
+    () => transformStudentData(studentData?.student),
+    [studentData],
+  );
+
+  const IdDetailsArr = useMemo(
+    () => transformIdData(studentData?.student, studentData?.room),
+    [studentData],
+  );
+
   if (studentIsLoading) return <PageLoader />;
 
   if (studentError) {
@@ -66,11 +145,13 @@ const AdminStudentRecord = () => {
           <h1 className="text-xl font-bold text-[#1A202C]">Bedspace</h1>
           <div className="flex items-center gap-6">
             <RoundedBtn
+              onClick={() => router.back()}
               text="Back"
               className="w-fit rounded-md border-[1.5px] border-solid border-[#E2E8F0] bg-white px-4 text-[#1A202C]"
             />
             <RoundedBtn
               text="Revoke Bedspace"
+              onClick={() => setOpenRevokeModal(true)}
               className="w-fit rounded-md border-[1.5px] border-solid border-[#E53E3E] bg-white px-4 text-[#E53E3E]"
             />
           </div>
@@ -98,7 +179,10 @@ const AdminStudentRecord = () => {
         </div>
         <div className="mt-5 flex gap-[80px] rounded-2xl bg-white">
           <Image
-            src={"/images/default-avatar-profile.jpg"}
+            src={
+              studentData?.student.img_url ||
+              "/images/default-avatar-profile.jpg"
+            }
             alt="img"
             width={128}
             height={128}
@@ -106,12 +190,14 @@ const AdminStudentRecord = () => {
           />
 
           <div className="mt-5 grid grid-cols-2 gap-x-5 gap-y-5">
-            <ResidentDetails title="Hall" details="Moremi Hall" />
-            <ResidentDetails title="Block" details="5" />
-            <ResidentDetails title="Room" details="302" />
-            <ResidentDetails title="Bed" details="1" />
-            <ResidentDetails title="Status" details="Occupied" />
-            <ResidentDetails title="Condition" details="Good" />
+            {residentStudentDetailsArr.length > 0 &&
+              residentStudentDetailsArr.map((item) => (
+                <ResidentDetails
+                  key={item.title}
+                  title={item.title}
+                  details={item.details}
+                />
+              ))}
           </div>
         </div>
       </div>
@@ -119,8 +205,14 @@ const AdminStudentRecord = () => {
       <IDtemplate
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        hall="Moremi"
+        hall={studentData?.room.hostel_name!}
         studentData={studentData?.student!}
+        idDetails={IdDetailsArr}
+      />
+      <RevokeBedspaceModal
+        isOpen={openRevokeModal}
+        setIsOpen={setOpenRevokeModal}
+        matricNo={studentData?.student.matric_no!}
       />
     </div>
   );

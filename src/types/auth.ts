@@ -7,6 +7,6 @@ export interface AuthInputs {
   matricNoOrStaffID: string;
   password: string;
   session: Option;
-  semester: Option;
+  // semester: Option;
 }
 export type AuthInputsValues = keyof AuthInputs;

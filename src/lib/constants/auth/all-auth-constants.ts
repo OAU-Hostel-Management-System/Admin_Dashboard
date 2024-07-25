@@ -69,11 +69,11 @@ export const SelectInputsArr = [
     error: "Session is required",
     placeholder: "Session",
   },
-  {
-    name: "semester" as AuthInputsValues,
-    options: semesterOptions,
-    rules: { required: true },
-    error: "Semester is required",
-    placeholder: "Semester",
-  },
+  // {
+  //   name: "semester" as AuthInputsValues,
+  //   options: semesterOptions,
+  //   rules: { required: true },
+  //   error: "Semester is required",
+  //   placeholder: "Semester",
+  // },
 ];

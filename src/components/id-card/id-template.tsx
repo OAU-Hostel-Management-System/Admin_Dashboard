@@ -5,6 +5,12 @@ import { FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 import { RxCross2 } from "react-icons/rx";
 
+interface IdDetail {
+  title: string;
+  details: string;
+  subDetails?: IdDetail[];
+}
+
 interface IdProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,6 +21,7 @@ interface IdProps {
     dept: string;
     img_url: string;
   };
+  idDetails: IdDetail[];
 }
 
 export const IDtemplate: FC<IdProps> = ({
@@ -22,6 +29,7 @@ export const IDtemplate: FC<IdProps> = ({
   setIsOpen,
   hall,
   studentData,
+  idDetails,
 }) => {
   if (!isOpen) return null;
   return (
@@ -72,28 +80,35 @@ export const IDtemplate: FC<IdProps> = ({
             </div>
             <div className="flex w-[60%] flex-col justify-between">
               <div className="space-y-2">
-                <div className="flex items-center gap-8 text-sm text-[#2D3748]">
-                  <p className="flex items-center gap-4">
-                    <span className="font-normal">Name</span>
-                    <span className="font-semibold">
-                      {studentData.fullName}
-                    </span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-8 text-sm text-[#2D3748]">
-                  <p className="flex items-center gap-4">
-                    <span className="font-normal">Matric No</span>
-                    <span className="font-semibold">
-                      {studentData.matric_no}
-                    </span>
-                  </p>
-                </div>
-                <div className="flex items-center gap-8 text-sm text-[#2D3748]">
-                  <p className="flex items-center gap-4">
-                    <span className="font-normal">Department</span>
-                    <span className="font-semibold">{studentData.dept}</span>
-                  </p>
-                </div>
+                {idDetails.map((item) => (
+                  <div key={item.title} className="flex items-center">
+                    <div className="flex items-center gap-8 text-sm text-[#2D3748]">
+                      <p className="flex items-center gap-4">
+                        <span className="font-normal">{item.title}</span>
+                        <span className="font-semibold">{item.details}</span>
+                      </p>
+                    </div>
+                    {item.subDetails && (
+                      <div className="ml-4 flex items-center gap-4">
+                        {item.subDetails.map((subItem) => (
+                          <div
+                            key={subItem.title}
+                            className="flex items-center gap-8 text-sm text-[#2D3748]"
+                          >
+                            <p className="flex items-center gap-4">
+                              <span className="font-normal">
+                                {subItem.title}
+                              </span>
+                              <span className="font-semibold">
+                                {subItem.details}
+                              </span>
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
               <div className="mt-12 flex flex-col items-center">
                 <hr className="h-[1.5px] w-full bg-[#1A202C]" />
@@ -109,7 +124,7 @@ export const IDtemplate: FC<IdProps> = ({
   );
 };
 
-export const ModalWrapper: FC<PropsWithChildren> = ({ children }) => {
+const ModalWrapper: FC<PropsWithChildren> = ({ children }) => {
   return ReactDOM.createPortal(
     <div className="fixed inset-0 flex h-screen w-screen items-center justify-center bg-black/80 px-[5%]">
       <div className="max-w-[800px] rounded-2xl border border-solid border-[#CBD5E0] bg-white p-4">
